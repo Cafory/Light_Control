@@ -1,0 +1,15 @@
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\bin\Debug\Light_Control_Test.exe.config
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\bin\Debug\Light_Control_Test.exe
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\bin\Debug\Light_Control_Test.pdb
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\MainWindow.g.cs
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\App.g.cs
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test_MarkupCompile.cache
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test_MarkupCompile.lref
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\MainWindow.baml
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.g.resources
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.Properties.Resources.resources
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csproj.GenerateResource.Cache
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csproj.CoreCompileInputs.cache
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.exe
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.pdb
+D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csprojResolveAssemblyReference.cache
