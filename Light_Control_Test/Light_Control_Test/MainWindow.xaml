@@ -30,6 +30,8 @@
             <ImageBrush ImageSource="Resources/主界面1.png"></ImageBrush>
         </Canvas.Background>
 
+        <Rectangle Fill="BlanchedAlmond" Height="80" Width="80"></Rectangle>
+        
         <Image Source="Resources/主界面副.png" x:Name="FireWork" Height="387" Width="129" Canvas.Left="38" Canvas.Top="108"  />
         <Button Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="FireWorkBack" Width="105" Height="38" Canvas.Left="48" Canvas.Top="452" Background="Transparent" BorderThickness="0" Click="FireWorkBack_Click"> </Button>
  
