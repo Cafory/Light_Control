@@ -13,3 +13,18 @@ D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Li
 D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.exe
 D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.pdb
 D:\visua studio 2013\Projects\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csprojResolveAssemblyReference.cache
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\bin\Debug\Light_Control_Test.exe.config
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\bin\Debug\Light_Control_Test.exe
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\bin\Debug\Light_Control_Test.pdb
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csprojResolveAssemblyReference.cache
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\MainWindow.g.cs
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\App.g.cs
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test_MarkupCompile.cache
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test_MarkupCompile.lref
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\MainWindow.baml
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.g.resources
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.Properties.Resources.resources
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csproj.GenerateResource.Cache
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.csproj.CoreCompileInputs.cache
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.exe
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Light_Control_Test.pdb
