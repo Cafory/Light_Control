@@ -31,7 +31,7 @@
         </Canvas.Background>
 
         <Rectangle Fill="BlanchedAlmond" Height="80" Width="80"></Rectangle>
-        <Ellipse Height="50" Width="50" Fill="Bisque" Canvas.Left="177" Canvas.Top="30"></Ellipse>
+   
         
         
         <Image Source="Resources/主界面副.png" x:Name="FireWork" Height="387" Width="129" Canvas.Left="38" Canvas.Top="108"  />
