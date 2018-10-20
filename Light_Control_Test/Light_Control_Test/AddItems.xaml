@@ -1,0 +1,353 @@
+﻿<Window x:Class="Light_Control_Test.AddItems"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Light_Control_Test"
+        mc:Ignorable="d"
+        Title="AddItems" Height="476" Width="319"  ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded"    >
+    <Window.Background>
+        <ImageBrush ImageSource="Resources/单背景.png"></ImageBrush>
+    </Window.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="28*"/>
+            <ColumnDefinition Width="31*"/>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="118*"/>
+            <ColumnDefinition Width="12*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28*"/>
+            <RowDefinition Height="170*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="105*"/>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="91*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="windowTitle" Content="添加配电箱"  Foreground="Wheat" Grid.ColumnSpan="3"></Label>
+
+
+        <!-- 添加配电箱或者灯具初始界面开始-->
+        <Grid x:Name="elecOrLightAddGrid" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Visible"    >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="170*"/>
+                <RowDefinition Height="38*"/>
+                <RowDefinition Height="105*"/>
+                <RowDefinition Height="44*"/>
+                <RowDefinition Height="91*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="59*"/>
+                <ColumnDefinition Width="28*"/>
+                <ColumnDefinition Width="31*"/>
+                <ColumnDefinition Width="59*"/>
+                <ColumnDefinition Width="118*"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="windowTip" Content="配电箱码:" FontSize="18" Grid.ColumnSpan="2" Grid.Row="1" ></Label>
+            <TextBox x:Name="_addname" Text="60000002" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="2" FontSize="20" TextAlignment="Center" VerticalContentAlignment="Center" ></TextBox>
+            <Button x:Name="confirm" Click="confirm_Click"  Grid.Row="3"  Content="确认" Grid.ColumnSpan="3" BorderThickness="0" Width="auto" Height="auto" Style="{StaticResource buttonstyle}">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+
+            <Button x:Name="cancel" Click="cancel_Click" Grid.Row="3" Grid.Column="4" Content="取消" Grid.ColumnSpan="1" BorderThickness="0" Width="auto" Height="auto" Style="{StaticResource buttonstyle}">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <!-- 添加配电箱或者灯具初始界面结束-->
+
+        <!-- 添加配电箱后界面开始-->
+        <Grid x:Name="afterEleAdd" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="8*"/>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="23*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="28*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="38*"/>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="88*"/>
+                <RowDefinition Height="26*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="23*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="40*"/>
+                <RowDefinition Height="19*"/>
+            </Grid.RowDefinitions>
+            <Label Content="添加配电箱下灯具" VerticalContentAlignment="Bottom" FontSize="14" FontWeight="Bold" Grid.ColumnSpan="9"></Label>
+            <Label Grid.Row="1" Content="灯码范围（最大值/最小值）" Grid.ColumnSpan="15"></Label>
+            <ListBox x:Name="range" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="14" SelectedItem="0"></ListBox>
+            <Label Grid.Row="3" Grid.ColumnSpan="9" Content="灯码最小值"></Label>
+            <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="Min1" >
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True" ></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" x:Name="Min2">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Grid.Row="4" Grid.Column="7" Grid.ColumnSpan="4" x:Name="Min3">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Grid.Row="4" Grid.Column="12" Grid.ColumnSpan="3" x:Name="Min4">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Grid.Row="4" Grid.Column="16" Grid.ColumnSpan="2" x:Name="Min5">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <TextBox Grid.Row="4" Grid.Column="19" Grid.ColumnSpan="2" Text="000" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  IsReadOnly="True"/>
+
+            <Label Grid.Row="6" Grid.ColumnSpan="9" Content="灯码最大值"></Label>
+            <ComboBox Text="{Binding ElementName=Min1,Path=Text}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" x:Name="Max1">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Text="{Binding ElementName=Min2,Path=Text}" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"  x:Name="Max2">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Text="{Binding ElementName=Min3,Path=Text}" Grid.Row="7" Grid.Column="7" Grid.ColumnSpan="4" x:Name="Max3">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Text="{Binding ElementName=Min4,Path=Text}" Grid.Row="7" Grid.Column="12" Grid.ColumnSpan="3" x:Name="Max4">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <ComboBox Text="{Binding ElementName=Min5,Path=Text}" Grid.Row="7" Grid.Column="16" Grid.ColumnSpan="2" x:Name="Max5">
+                <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True"></ComboBoxItem>
+                <ComboBoxItem Content="1" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="2" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="3" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="4" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="5" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="6" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="7" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="8" HorizontalContentAlignment="Center" ></ComboBoxItem>
+                <ComboBoxItem Content="9" HorizontalContentAlignment="Center" ></ComboBoxItem>
+            </ComboBox>
+            <TextBox Grid.Row="7" Grid.Column="19" Text="009" Grid.ColumnSpan="2" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  IsReadOnly="True"/>
+
+            <Label Grid.Row="8" Grid.ColumnSpan="15" Content="设置配电箱下全体灯具初始状态："></Label>
+
+            <RadioButton  Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="6" Content="无" IsChecked="True"></RadioButton>
+            <RadioButton  x:Name="AllShine" Grid.Row="9" Grid.Column="11" Grid.ColumnSpan="10" Content="全亮"></RadioButton>
+            <Button Grid.Row="10"  Grid.Column="2" Grid.ColumnSpan="6" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Content="增加范围" FontSize="18" FontFamily="x:null" x:Name="AddRange" Click="AddRange_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="DeleteRange" Grid.Row="10"  Grid.Column="13" Grid.ColumnSpan="6" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Content="删除范围" FontSize="18" FontFamily="x:null" Click="DeleteRange_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+
+            <Button Grid.Row="12"  Grid.Column="2" Grid.ColumnSpan="6" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Content="开始搜索" FontSize="18" FontFamily="x:null" Click="Button_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+            <Button Grid.Row="12" Click="Button_Click_1"  Grid.Column="13" Grid.ColumnSpan="6" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Content="取消" FontSize="18" FontFamily="x:null">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <!-- 添加配电箱后界面结束-->
+
+        <!-- 搜寻界面开始-->
+        <Grid x:Name="searchGrid" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Collapsed" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="89*"/>
+                <RowDefinition Height="26*"/>
+                <RowDefinition Height="109*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Content="搜索中，请耐心等候......" FontSize="20" HorizontalContentAlignment="Center" FontWeight="Bold"></Label>
+        </Grid>
+        <!-- 搜寻界面结束-->
+
+        <!-- 搜索完毕界面开始-->
+        <Grid x:Name="afterSearch" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="63*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="111*"/>
+                <ColumnDefinition Width="64*"/>
+                <ColumnDefinition Width="23*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="41*"/>
+                <RowDefinition Height="82*"/>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="163*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="24*"/>
+                <RowDefinition Height="43*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Grid.Column="2"  FontSize="16" HorizontalContentAlignment="Stretch" Grid.ColumnSpan="4">
+                <TextBlock Margin="0" Text="提示：当前状态中，只有此配电箱下未被搜索到的灯会进入闪烁的状态！" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+            </Label>
+            <Label  Grid.Row="2" Grid.Column="2" Content="搜索结果" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" Height="29" Margin="0,2" Grid.ColumnSpan="4"></Label>
+            <ListBox x:Name="resultDis" Grid.Row="3"  Grid.Column="2" Grid.ColumnSpan="4"></ListBox>
+            <Button x:Name="ManualAddB" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource MyButton}" Content="手动添加灯具" FontSize="12" Click="ManualAddB_Click"></Button>
+            <TextBox x:Name="ManuaAddLightT" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2"></TextBox>
+            <Button Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Content="退出" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Click="Button_Click_1">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png" ></ImageBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <!-- 搜索完毕界面结束-->
+
+        <!-- 通信设置界面开始-->
+        <Grid x:Name="ConnectionSet" Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" Grid.ColumnSpan="5" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="139*"/>
+                <ColumnDefinition Width="17*"/>
+                <ColumnDefinition Width="139*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="57*"/>
+                <RowDefinition Height="49*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="48*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="48*"/>
+                <RowDefinition Height="31*"/>
+                <RowDefinition Height="48*"/>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="56*"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Grid.Column="0" Content="报警器与主机连接COM口" VerticalContentAlignment="Center" Grid.ColumnSpan="2"></Label>
+            <Label Grid.Row="3" Grid.Column="0" Content="报警器与主机通信波特率" VerticalContentAlignment="Center" Grid.ColumnSpan="2"></Label>
+            <Label Grid.Row="5" Grid.Column="0" Content="配电箱与主机连接COM口" VerticalContentAlignment="Center" Grid.ColumnSpan="2"></Label>
+            <Label Grid.Row="7" Grid.Column="0" Content="主机板与主机连接COM口" VerticalContentAlignment="Center" Grid.ColumnSpan="2"></Label>
+            <ComboBox  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="AlarmPcCom" Grid.Row="1" Grid.Column="3"></ComboBox>
+            <ComboBox x:Name="AlarmPcBps" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="5"></ComboBox>
+            <TextBox x:Name="H2" Background="#ECECEC"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="3" Grid.Column="2"  ></TextBox>
+            <ComboBox x:Name="PeiPcCom"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="5" Grid.Column="5"></ComboBox>
+            <ComboBox x:Name="PcBanPcCom"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Row="7" Grid.Column="5"></ComboBox>
+            <Button x:Name="ConnectionSet_Back" Click="ConnectionSet_Back_Click" Grid.Row="9" Grid.ColumnSpan="1" Style="{StaticResource buttonstyle}" Height="auto" Width="auto" Content="返回"> 
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png" ></ImageBrush>
+                </Button.Background>
+            </Button>
+            <Button x:Name="ConnectSetConfirm" Click="ConnectSetConfirm_Click" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="1" Style="{StaticResource buttonstyle}" Height="auto" Width="auto" Content="确认">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/灯具设置选项按键.png" ></ImageBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <!-- 通信界面结束-->
+    </Grid>
+</Window>

@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Light_Control_Test</RootNamespace>
     <AssemblyName>Light_Control_Test</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,9 +34,11 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,6 +58,61 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddItems.xaml.cs">
+      <DependentUpon>AddItems.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Changepd.xaml.cs">
+      <DependentUpon>Changepd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Correcting.xaml.cs">
+      <DependentUpon>Correcting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DisplaySet.xaml.cs">
+      <DependentUpon>DisplaySet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FireWorkTogether.xaml.cs">
+      <DependentUpon>FireWorkTogether.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Instruction.cs" />
+    <Compile Include="NormolProcess.cs" />
+    <Compile Include="PortHelper.cs" />
+    <Compile Include="PrePlanSetClass.cs" />
+    <Compile Include="Right_Popup.xaml.cs">
+      <DependentUpon>Right_Popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelfCheck.xaml.cs">
+      <DependentUpon>SelfCheck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Set.xaml.cs">
+      <DependentUpon>Set.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SqlHelper.cs" />
+    <Compile Include="trueMore.xaml.cs">
+      <DependentUpon>trueMore.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VoiceCancel.xaml.cs">
+      <DependentUpon>VoiceCancel.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AddItems.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Changepd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Correcting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplaySet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FireWorkTogether.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,6 +125,78 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Right_Popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelfCheck.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Set.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\BaseStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Bootstrap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FormControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InputGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Label.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Panel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Sizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="trueMore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VoiceCancel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -91,16 +222,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\火警联动.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\界面.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\主界面.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\主界面1.png" />
@@ -124,7 +254,7 @@
     <Resource Include="Resources\灯具设置选项按键.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\阿萨大.png" />
+    <Resource Include="Resources\MainMenu.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\疏散预案.png" />
@@ -134,6 +264,76 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\主界面副.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\单背景.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\键盘背景.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\键盘背景fu.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\键盘背景fu总-透明 %2821%29fu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\空界面1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\空界面2.png" />
+    <Resource Include="Resources\空界面3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\配电箱黄.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\加.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\标志灯双向绿.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\键盘背景改.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\键盘背景改又.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\图层 0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\空白登陆背景.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\大的确定.png" />
+    <Resource Include="Resources\大的返回.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\键盘.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Styles\account_.png" />
+    <Resource Include="Styles\cancel_48pxs%29.png" />
+    <Resource Include="Styles\close_icon.png" />
+    <Resource Include="Styles\minus%29.png" />
+    <Resource Include="Styles\min_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\地埋灯双向绿.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\双头灯绿.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\标志灯双向灭.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\标志灯右绿.png" />
+    <Resource Include="Resources\标志灯左绿.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,6 +4,62 @@
              xmlns:local="clr-namespace:Light_Control_Test"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type Button}" x:Key="MyButton">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border BorderBrush="#FF6495ED" BorderThickness="1" CornerRadius="5">
+                                    <Label Background="{TemplateBinding Background}" Content="{TemplateBinding Content}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"></Label>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="Name" Value="Menu">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Label Background="{TemplateBinding Background}" Content="{TemplateBinding Content}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"></Label>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="buttonstyle"  BasedOn="{StaticResource MyButton}">
+            <Setter Property="Height" Value="50"></Setter>
+            <Setter Property="Width" Value="165"></Setter>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Label}" x:Key="myLabel">
+            <Setter Property="FontFamily" Value="黑体"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="BorderBrush" Value="Gray"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+        <!--<ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Colors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Fonts.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Sizes.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/BaseStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Window.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Label.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Panel.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/Button.xaml"></ResourceDictionary>
+                --><!--<ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/DataGrid.xaml"></ResourceDictionary>--><!--
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/ProgressBar.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/FormControl.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Light_Control_Test;component/Styles/InputGroup.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>-->
     </Application.Resources>
+    
 </Application>

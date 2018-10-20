@@ -5,182 +5,443 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Light_Control_Test"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1024" Width="880"  ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown" Deactivated="Window_Deactivated" >
+        Title="MainWindow"  Height="1024" Width="880"  WindowState="Normal"    ResizeMode="NoResize"   WindowStyle="None" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown" Deactivated="Window_Deactivated" >
+
     <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="testStyle">
+            <Setter  Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Rectangle   Fill="{TemplateBinding Background}"  />
+                            <!--<Label Content="{TemplateBinding Content}" Width="60" Height="20"></Label>-->
+                            <ContentControl    Content="{TemplateBinding Content}" Grid.Row="1"  HorizontalContentAlignment="Center" HorizontalAlignment="Center"  Width="{TemplateBinding Width}">
 
-        <Style TargetType="{x:Type Button}" x:Key="MyButton">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border BorderBrush="Blue" BorderThickness="1">
-                                    <Label Background="{TemplateBinding Background}" Content="{TemplateBinding Content}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"></Label>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
+                            </ContentControl>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
-
     </Window.Resources>
-    <Canvas Margin="0" x:Name="MainGrid" >
-        <Canvas.Background>
-            <ImageBrush ImageSource="Resources/主界面1.png"></ImageBrush>
-        </Canvas.Background>
-
-        <Rectangle Fill="BlanchedAlmond" Height="80" Width="80"></Rectangle>
-   
-        
-        
-        <Image Source="Resources/主界面副.png" x:Name="FireWork" Height="387" Width="129" Canvas.Left="38" Canvas.Top="108"  />
-        <Button Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="FireWorkBack" Width="105" Height="38" Canvas.Left="48" Canvas.Top="452" Background="Transparent" BorderThickness="0" Click="FireWorkBack_Click"> </Button>
+    <Grid  x:Name="MainGrid"  >
  
-        <Button Style="{StaticResource MyButton}"   x:Name="button1" BorderThickness="0"  Canvas.Left="10" Margin="0" Canvas.Top="609" Click="Button_Click" Height="52" Width="129">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="108*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="112*"/>
+            <RowDefinition Height="51*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="52*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="51*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="34*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="11*"/>
+            <RowDefinition Height="11*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="12*"/>
+            <ColumnDefinition Width="96*"/>
+            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="93*"/>
+            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="490*"/>
+            <ColumnDefinition Width="26*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/主界面1.png"></ImageBrush>
+        </Grid.Background>
+        <Button Grid.Row="19"  x:Name="Test" Click="Test_Click"></Button>
+        <Image Source="Resources/主界面副.png" Stretch="Fill" Visibility="Collapsed" x:Name="FireWork" Margin="10,5,1,0" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="14"  />
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="FireWorkBack" Background="Transparent" BorderThickness="0" Click="FireWorkBack_Click" Grid.Column="3"  Grid.Row="14" Grid.ColumnSpan="2"/>
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisExitL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click"  Grid.Column="3"  Grid.Row="12" Grid.ColumnSpan="2"/>
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisBrightL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click" Grid.Column="3"  Grid.Row="10" Grid.ColumnSpan="2"/>
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisDoubleL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click" Grid.Column="3"  Grid.Row="8" Grid.ColumnSpan="2"/>
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisFlagL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click" Grid.Column="3"  Grid.Row="6" Grid.ColumnSpan="2"/>
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisBuryL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click" Grid.Column="3"  Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisAllL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click" Grid.Column="3"  Grid.Row="2" Grid.ColumnSpan="2"/>
+        <Button Style="{StaticResource MyButton}"   x:Name="button1" BorderThickness="0"  Click="Button_Click" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="16">
             <Button.Background >
                 <ImageBrush ImageSource="Resources/火警联动.png"></ImageBrush>
             </Button.Background>
         </Button>
 
-        <Button Style="{StaticResource MyButton}"   x:Name="buttonPlan" BorderThickness="0"  Canvas.Left="10" Margin="0" Canvas.Top="692" Click="Button_Click" Height="52" Width="129">
+        <Button Style="{StaticResource MyButton}"   x:Name="buttonPlan" BorderThickness="0"  Grid.Column="1"  Click="buttonPlan_Click" Grid.ColumnSpan="3" Grid.Row="18">
             <Button.Background >
                 <ImageBrush ImageSource="Resources/疏散预案.png"></ImageBrush>
             </Button.Background>
         </Button>
 
-        <Button Style="{StaticResource MyButton}"   x:Name="buttonUpdate" BorderThickness="0"  Canvas.Left="10" Margin="0" Canvas.Top="775" Click="Button_Click" Height="52" Width="129">
+        <Button Style="{StaticResource MyButton}"   x:Name="buttonUpdate" BorderThickness="0" Click="buttonUpdate_Click" Grid.Column="1"  Grid.ColumnSpan="3" Grid.Row="20">
             <Button.Background >
                 <ImageBrush ImageSource="Resources/系统升级.png"></ImageBrush>
             </Button.Background>
         </Button>
 
-        <Button x:Name="Test" Style="{StaticResource MyButton}"  BorderThickness="0" Width="126"  Height="46" Canvas.Left="177" Margin="0" Canvas.Top="120" Click="Test_Click">
-            <Button.Background>
-                <ImageBrush ImageSource="Resources/主界面.png"/>
-            </Button.Background>
-        </Button>
-        <Button x:Name="Menu" Height="94" Width="100" Background="Transparent" BorderThickness="0" Canvas.Left="39" Canvas.Top="866" Click="Menu_Click"  Style="{StaticResource MyButton}"></Button>
-        <Grid     Canvas.Left="167" Canvas.Top="330" Height="auto" Width="auto">
+
+        <Button x:Name="Menu" Height="Auto" Width="Auto" Background="Transparent" BorderThickness="0"  Style="{StaticResource buttonstyle}" Click="Menu_Click" Grid.Column="2" Grid.RowSpan="3" Grid.Row="22" Grid.ColumnSpan="2"  />
+        <Button Grid.Row="26" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3"  Height="Auto" x:Name="Login" Click="Login_Click" Content="登录" Style="{StaticResource MyButton}" Width="auto"></Button>
+        <Grid Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="4" Grid.RowSpan="20" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="228*"/>
+                <ColumnDefinition Width="22*"/>
+                <ColumnDefinition Width="412*"/>
+                <ColumnDefinition Width="13*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="251*"/>
+                <RowDefinition Height="69*"/>
+                <RowDefinition Height="372*"/>
+                <RowDefinition Height="11*"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3">
+                <WrapPanel x:Name="addPanel" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="AliceBlue" MouseLeftButtonDown="addPanel_MouseLeftButtonDown"  >
+                    <TextBlock x:Name="_lightHost" Visibility="Collapsed"   ></TextBlock>
+                    <TextBlock Text="配电箱" Visibility="Collapsed" x:Name="_addName" ></TextBlock>
+                    <Label Visibility="Collapsed" x:Name="dateCheck" Content=" "></Label>
+                    <Button x:Name="addNew" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="    添加配电箱" Style="{StaticResource testStyle}" Width="90" Height="120"  Margin="0,0,10,10" Click="Bt_Click">
+                        <Button.Background>
+                            <ImageBrush ImageSource="Resources/加.jpg"></ImageBrush>
+                        </Button.Background>
+                    </Button>
+                </WrapPanel>
+            </ScrollViewer>
+            <!--<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="4">
+                <TabControl   TabStripPlacement="Left" >
+                    <TabItem x:Name="allLights" BorderThickness="0"  Height="20">
+                        
+                    </TabItem>
+                    <TabItem x:Name="geoLights" Height="20"></TabItem>
+                    <TabItem x:Name="flagLights" Height="20"></TabItem>
+                    <TabItem x:Name="doublesLights" Height="20"></TabItem>
+                    <TabItem x:Name="lightLights" Height="20"></TabItem>
+                    <TabItem x:Name="exitLights" Height="20"></TabItem>
+                </TabControl>
+            </ScrollViewer>-->
 
 
-            <Image x:Name="menuImage" Source="Resources/阿萨大.png"  Visibility="Visible" Margin="0,24,0,-24"  Height="497" Width="240"  MouseLeftButtonDown="menuImage_MouseLeftButtonDown"   />
-            <StackPanel Opacity="{Binding ElementName=menuImage, Path=Opacity, Mode=OneWay}" Visibility="{Binding ElementName=menuImage, Path=Visibility,Mode=OneWay}">
-                <Button x:Name="About" Height="38" Margin="45,120,30,0" Content="      关于" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+
+            <!-- 故障显示界面-->
+            <TabControl x:Name="errorDis" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="AliceBlue" Visibility="Collapsed">
+                <TabItem Height="20" Width="auto"  Header="配电箱故障情况">
+                </TabItem>
+                <TabItem Height="20" Width="auto" Header="灯具故障情况"></TabItem>
+                <TabItem Height="20" Width="auto" Header="其它故障"></TabItem>
+                <TabItem Height="20" Width="auto" Header="其它">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="37*"/>
+                            <ColumnDefinition Width="24*"/>
+                            <ColumnDefinition Width="104*"/>
+                            <ColumnDefinition Width="42*"/>
+                            <ColumnDefinition Width="38*"/>
+                            <ColumnDefinition Width="61*"/>
+                            <ColumnDefinition Width="34*"/>
+                            <ColumnDefinition Width="27*"/>
+                            <ColumnDefinition Width="45*"/>
+                            <ColumnDefinition Width="64*"/>
+                            <ColumnDefinition Width="50*"/>
+                            <ColumnDefinition Width="25*"/>
+                            <ColumnDefinition Width="105*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="68*"/>
+                            <RowDefinition Height="53*"/>
+                            <RowDefinition Height="76*"/>
+                            <RowDefinition Height="41*"/>
+                            <RowDefinition Height="34*"/>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="36*"/>
+                            <RowDefinition Height="36*"/>
+                            <RowDefinition Height="36*"/>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="36*"/>
+                            <RowDefinition Height="36*"/>
+                            <RowDefinition Height="36*"/>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="36*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="警报来源：" Grid.ColumnSpan="3"></Label>
+                        <Label FontSize="20" Content="故障日志" VerticalAlignment="Center" Grid.Row="1"  Grid.ColumnSpan="3" Height="35" Width="auto" Margin="0,9" ></Label>
+                        <Button Content="打开日志" FontSize="12" Grid.Row="1" Background="Aquamarine" Grid.Column="12" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" BorderThickness="0"></Button>
+                        <ComboBox Grid.Row="1" Grid.Column="9" Grid.ColumnSpan="2" x:Name="logSelected">
+                            <ComboBoxItem Content="当前日志" IsSelected="True"  ></ComboBoxItem>
+                        </ComboBox>
+                        <Label  Content="系统总计：" Grid.Row="3" Grid.Column="1" FontSize="16" Grid.ColumnSpan="5"></Label>
+                        <Label  Content="故障总计：" Grid.Row="3" Grid.Column="7" FontSize="16" Grid.ColumnSpan="6"></Label>
+                        <Label  Grid.Row="4" Grid.Column="2" Content="配电箱总数" FontSize="16"></Label>
+                        <Label  Grid.Row="4" Grid.Column="4" Content="3" FontSize="16"></Label>
+                        <Label  Grid.Row="4" Grid.Column="8" Content="配电箱总数" FontSize="16" Grid.ColumnSpan="2"></Label>
+                        <Label  Grid.Row="4" Grid.Column="11" Content="3" FontSize="16"></Label>
+
+                        <Label  Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Content="灯具总数" FontSize="16" Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+                        <Label  Grid.Row="5" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+                        <Label  Grid.Row="5" Grid.Column="8" VerticalAlignment="Center" Content="灯具总数" FontSize="16" Grid.ColumnSpan="2"   Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+                        <Label  Grid.Row="5" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+
+
+                        <Label  Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Content="照明灯总数" FontSize="16"  Height="30" Width="auto" Margin="0,3,0,2" ></Label>
+                        <Label  Grid.Row="6" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3,0,2" ></Label>
+                        <Label  Grid.Row="6" Grid.Column="8" VerticalAlignment="Center" Content="照明灯总数" FontSize="16" Grid.ColumnSpan="2"   Height="30" Width="auto" Margin="0,3,0,2" ></Label>
+                        <Label  Grid.Row="6" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Height="30" Width="auto" Margin="0,3,0,2" ></Label>
+
+
+                        <Label  Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Content="应急灯总数" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="7" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="7" Grid.Column="8" VerticalAlignment="Center" Content="应急灯总数" FontSize="16" Grid.ColumnSpan="2"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="7" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Height="30" Width="auto" Margin="0,3" ></Label>
+
+                        <Label  Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" Content="出口灯总数" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="8" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="8" Grid.Column="8" VerticalAlignment="Center" Content="出口灯总数" FontSize="16" Grid.ColumnSpan="2"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="8" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Height="30" Width="auto" Margin="0,3" ></Label>
+
+                        <Label  Grid.Row="9" Grid.Column="2" VerticalAlignment="Center" Content="楼层灯总数" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="9" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="9" Grid.Column="8" VerticalAlignment="Center" Content="楼层灯总数" FontSize="16" Grid.ColumnSpan="2"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="9" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Height="30" Width="auto" Margin="0,3" ></Label>
+
+                        <Label  Grid.Row="10" Grid.Column="2" VerticalAlignment="Center" Content="双向标志灯总数" FontSize="16"  Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+                        <Label  Grid.Row="10" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+                        <Label  Grid.Row="10" Grid.Column="8" VerticalAlignment="Center" Content="双向标志灯总数" FontSize="16" Grid.ColumnSpan="3"   Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+                        <Label  Grid.Row="10" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,2,0,3" ></Label>
+
+
+                        <Label  Grid.Row="11" Grid.Column="2" VerticalAlignment="Center" Content="左向标志灯总数" FontSize="16"  Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="11" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="11" Grid.Column="8" VerticalAlignment="Center" Content="左向标志灯总数" FontSize="16" Grid.ColumnSpan="3"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="11" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+
+
+                        <Label  Grid.Row="12" Grid.Column="2" VerticalAlignment="Center" Content="右向标志灯总数" FontSize="16"  Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="12" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="12" Grid.Column="8" VerticalAlignment="Center" Content="右向标志灯总数" FontSize="16" Grid.ColumnSpan="3"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="12" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+
+
+                        <Label  Grid.Row="13" Grid.Column="2" VerticalAlignment="Center" Content="双向地埋灯总数" FontSize="16"  Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="13" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="13" Grid.Column="8" VerticalAlignment="Center" Content="双向地埋灯总数" FontSize="16" Grid.ColumnSpan="3"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="13" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+
+                        <Label  Grid.Row="14" Grid.Column="2" VerticalAlignment="Center" Content="单向地埋灯总数" FontSize="16"  Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="14" Grid.Column="4" VerticalAlignment="Center" Content="3" FontSize="16"  Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="14" Grid.Column="8" VerticalAlignment="Center" Content="单向地埋灯总数" FontSize="16" Grid.ColumnSpan="3"   Height="30" Width="auto" Margin="0,3" ></Label>
+                        <Label  Grid.Row="14" Grid.Column="11" VerticalAlignment="Center" Content="3" FontSize="16" Grid.ColumnSpan="2" Height="30" Width="auto" Margin="0,3" ></Label>
+                    </Grid>
+                </TabItem>
+                <TabItem Height="20" Width="auto" Header="退出"  x:Name="errorBack" MouseLeftButtonUp="errorBack_MouseLeftButtonDown"></TabItem>
+            </TabControl>
+
+
+
+            <Image x:Name="update"  Source="Resources/单背景.png" Visibility="Collapsed"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Height="auto" Width="auto"  Stretch="Fill" Grid.RowSpan="2"/>
+            <!-- 更新选项菜单Grid-->
+            <Grid x:Name="updateContainer"  Visibility="{Binding ElementName=update,Path=Visibility,Mode=OneWay}"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="28*"/>
+                    <ColumnDefinition Width="76*"/>
+                    <ColumnDefinition Width="27*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="55*"/>
+                    <RowDefinition Height="41*"/>
+                    <RowDefinition Height="55*"/>
+                    <RowDefinition Height="41*"/>
+                    <RowDefinition Height="55*"/>
+                    <RowDefinition Height="58*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="updateOnline"  Height="Auto" Width="Auto"   Content="在线更新" Style="{StaticResource buttonstyle}" Grid.Row="1" Grid.Column="1" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="updateOutline" Height="Auto" Width="Auto"  Content="离线更新"  Style="{StaticResource buttonstyle}"  Grid.Row="3" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button x:Name="updateBack" Content="返回" Height="Auto" Width="Auto" Style="{StaticResource buttonstyle}" Grid.Row="5" Grid.Column="1">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Resources/灯具设置选项按键.png"></ImageBrush>
+                    </Button.Background>
+                </Button>
+
+            </Grid>
+            <!-- 更新选项菜单Grid结束-->
+
+
+            <!-- 主菜单选项Grid开始-->
+            <Image x:Name="menuImage"  Source="Resources/MainMenu.png"  Visibility="Collapsed" Grid.Row="2" Grid.Column="0"   Height="auto" Width="auto"  Stretch="Fill" MouseLeftButtonDown="menuImage_MouseLeftButtonDown" Grid.RowSpan="3" Grid.ColumnSpan="2"   />
+            <Grid Visibility="{Binding ElementName=menuImage, Path=Visibility,Mode=OneWay}" x:Name="mainMenuGrid" Grid.RowSpan="3" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="15*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="56*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="16*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="17*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="17*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="17*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="21*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="About" Height="Auto"  Content="      关于"  Style="{StaticResource buttonstyle}" Grid.Row="1"  Grid.Column="1" Width="Auto" >
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/主菜单按键关于我们.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="MainMenuSet" Click="MainMenuSet_Click" Height="42" Margin="45,5,30,0"  Content="     设置" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                <Button x:Name="MainMenuSet" Height="Auto" Click="MainMenuSet_Click" Grid.Row="3"  Grid.Column="1"  Content="     设置"  Style="{StaticResource buttonstyle}"  Width="Auto" >
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/设置.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="DataCenter" Height="40" Margin="45,5,30,0"  Content="      数据中心" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0" Click="DataCenter_Click">
+                <Button x:Name="DataCenter" Height="Auto"  Content="      数据中心"  Style="{StaticResource buttonstyle}" Click="DataCenter_Click" Grid.Row="5"  Width="Auto" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/数据中心.png"></ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button x:Name="DataLoad"  Height="42" Margin="45,5,30,0" Content="      数据载入" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0" Click="DataLoad_Click">
+                <Button x:Name="DataLoad"  Height="Auto"  Content="      数据载入"  Style="{StaticResource buttonstyle}" Click="DataLoad_Click" Grid.Row="7"  Width="Auto" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/数据载入.png"></ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Height="42" Margin="45,5,30,0" Content="     修改密码" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                <Button x:Name="ModePassword" Click="ModePassword_Click"  Height="Auto" Content="     修改密码"  Style="{StaticResource buttonstyle}" Grid.Row="9"   Width="Auto" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/主菜单按键修改密码.png"></ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Height="42" Margin="45,5,30,0" Content="     系统恢复" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                <Button   Height="Auto" Content="     系统恢复"  Style="{StaticResource buttonstyle}" Grid.Row="11"  Width="Auto" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/助主菜单案件系统恢复.png"/>
                     </Button.Background>
                 </Button>
-                <Button Height="46" Margin="45,5,30,0" Content="     初始化" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                <Button  Height="Auto" Content="     初始化"  Style="{StaticResource buttonstyle}" Grid.Row="13"  Width="Auto" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/主菜单按键初始化.png"></ImageBrush>
                     </Button.Background>
                 </Button>
-                <Button Height="42" Margin="45,5,30,0" Content="     注册" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                <!--<Button  Margin="72,18,-193,12" Height="Auto" Content="     注册"  Style="{StaticResource buttonstyle}" Grid.Row="1" Grid.RowSpan="3" Width="Auto" Grid.Column="2">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/注册.png"/>
                     </Button.Background>
-                </Button>
-            </StackPanel>
-
+                </Button>-->
+            </Grid>
+            <!--主菜单选项Grid结束-->
 
             <!-- 设置二级菜单-->
-
-            <Popup x:Name="SecondMenuPop" AllowsTransparency="True"  Placement="Right"   IsOpen="False"   >
+            <Popup x:Name="SecondMenuPop" AllowsTransparency="True"   PopupAnimation="Fade"  Placement="Right" PlacementTarget="{Binding ElementName=MainMenuSet}"  IsOpen="False"  HorizontalOffset="40" SnapsToDevicePixels="True" Grid.RowSpan="2" Grid.ColumnSpan="2"    >
                 <StackPanel >
-                    <!--<StackPanel.Background>
-                        <ImageBrush ImageSource="Resources/二级菜单.png"></ImageBrush>
-                    </StackPanel.Background>-->
-                    <Button Height="50"  Margin="0,150,0,0" Width="165" Content="安装位置设置" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+
+                    <Button   Margin="0,0,0,0"  x:Name="insLocation" Click="insLocation_Click" Content="安装位置设置"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="显示设置" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"  x:Name="disSetBt"  Content="显示设置"  Style="{StaticResource buttonstyle}" Click="disSetBt_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="消音设置" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button Margin="0,5,0,0"  x:Name="VoiceCancelSet" Click="VoiceCancelSet_Click"  Content="消音设置"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165" Content="通信设置" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  x:Name="ConnectionSet" Margin="0,5,0,0" Content="通信设置"  Style="{StaticResource buttonstyle}" Click="ConnectionSet_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165" Content="连接设置" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button Margin="0,5,0,0"  Content="连接设置"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165" Content="差错校正" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"  x:Name="CorrectingBt" Click="CorrectingBt_Click"  Content="差错校正"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165" Content="照明模式开" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"  Content="照明模式开"  Style="{StaticResource buttonstyle}" >
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165" Content="照明模式关" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"  Content="照明模式关"  Style="{StaticResource buttonstyle}" >
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
                 </StackPanel>
             </Popup>
-
             <!-- 数据中心二级菜单-->
-            <Popup x:Name="SecondMenuPop2" AllowsTransparency="True"  Placement="Right"   IsOpen="False"  >
-                <StackPanel >
+            <Popup x:Name="SecondMenuPop2" AllowsTransparency="True"  Placement="Right"   PopupAnimation="Fade"  IsOpen="False"   PlacementTarget="{Binding ElementName=DataCenter}" HorizontalOffset="40"  SnapsToDevicePixels="True" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                <StackPanel>
                     <!--<StackPanel.Background>
                         <ImageBrush ImageSource="Resources/二级菜单.png"></ImageBrush>
                     </StackPanel.Background>-->
-                    <Button Height="50"  Margin="0,220,0,0" Width="165" Content="导出设备信息" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button   Margin="0,0,0,0"  Content="导出设备信息"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="导出故障信息" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"  Content="导出故障信息"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="恢复备份数据" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"   Content="恢复备份数据"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165" Content="数据备份" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button  Margin="0,5,0,0"  Content="数据备份"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
@@ -188,25 +449,23 @@
 
                 </StackPanel>
             </Popup>
-
             <!-- 数据载入二级菜单-->
-
-            <Popup x:Name="SecondMenuPop3" AllowsTransparency="True"  Placement="Right"   IsOpen="False"  >
+            <Popup x:Name="SecondMenuPop3" AllowsTransparency="True"  Placement="Right"  PopupAnimation="Fade"   IsOpen="False" PlacementTarget="{Binding ElementName=DataLoad}" HorizontalOffset="40" Grid.RowSpan="2" Grid.ColumnSpan="2" >
                 <StackPanel >
                     <!--<StackPanel.Background>
                         <ImageBrush ImageSource="Resources/二级菜单.png"></ImageBrush>
                     </StackPanel.Background>-->
-                    <Button Height="50"  Margin="0,260,0,0" Width="165" Content="编码器数据" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button Height="50"  Margin="0,0,0,0" Width="165" Content="编码器数据"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="APP离线" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="APP离线"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
                     </Button>
-                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="初始化前数据" FontSize="20" HorizontalContentAlignment="Center" Style="{StaticResource MyButton}" BorderThickness="0">
+                    <Button Height="50" Margin="0,5,0,0" Width="165"  Content="初始化前数据"  Style="{StaticResource buttonstyle}">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/灯具设置选项按键.png"/>
                         </Button.Background>
@@ -216,5 +475,178 @@
                 </StackPanel>
             </Popup>
         </Grid>
-    </Canvas>
+
+
+        <!-- 右下显示Grid-->
+        <Grid   ShowGridLines="True" Grid.Column="9"  Grid.ColumnSpan="1" Grid.RowSpan="5" Grid.Row="22" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23*"></RowDefinition>
+                <RowDefinition Height="25*"></RowDefinition>
+                <RowDefinition Height="91*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="dateDisplay"     Content="ssssssssssssssasdd" Width="Auto"   ></Label>
+            <Label x:Name="fireDisplay"     Content="火警:无"  Grid.Column="1" Width="Auto"></Label>
+            <Label x:Name="deviceStatus"     Content="设备状态:5个故障"  Grid.Column="2" Width="Auto"></Label>
+            <Label x:Name="power" Content="电源:主电"  Grid.Row="1"></Label>
+            <Label x:Name="com" Content="主机板：未连接" Grid.Row="1" Grid.Column="1"></Label>
+            <Label x:Name="alarm"     Content="报警器：未连接"  Grid.Row="1" Grid.Column="2" Width="Auto"></Label>
+            <Label x:Name="connect" Content="未联网"  Grid.Row="1" Grid.Column="2"  HorizontalAlignment="Right" Width="46"></Label>
+            <ListBox x:Name="ErrorDisList" Grid.Row="2" Grid.ColumnSpan="3"></ListBox>
+        </Grid>
+
+        <!-- 预案Grid-->
+        <Grid Background="White"  x:Name="planGrid" Grid.RowSpan="20" Visibility="Collapsed" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="48*"/>
+                <ColumnDefinition Width="138*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="119*"/>
+                <ColumnDefinition Width="58*"/>
+                <ColumnDefinition Width="116*"/>
+                <ColumnDefinition Width="193*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="42*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="8*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="36*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="622*"/>
+                <RowDefinition Height="46*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+
+
+            <Label  Content="配电箱" VerticalAlignment="Center" Height="26"  Grid.Row="0"  Grid.ColumnSpan="2" VerticalContentAlignment="Center" Margin="0,5"></Label>
+
+            <ComboBox Grid.Column="2" Background="White" x:Name="PrePlanPei" SelectionChanged="PrePlanPei_SelectionChanged"></ComboBox>
+
+            <Label Content="安装位置:" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"  Grid.ColumnSpan="1" Margin="5,6" Height="24" Width="60"    ></Label>
+
+            <Label x:Name="PeiPosition" Content=" " Grid.Column="4" Grid.ColumnSpan="2"></Label>
+            <CheckBox x:Name="disNoSet" Grid.Row="0" Unchecked="disNoSet_Unchecked" Checked="disNoSet_Checked" Grid.Column="6"  VerticalContentAlignment="Center" Content="只显示未设置灯具"></CheckBox>
+
+
+
+            <ComboBox Grid.Column="7" x:Name="LightInPei" ></ComboBox>
+            <Label Grid.Column="9" Grid.ColumnSpan="1" PreviewMouseLeftButtonDown="Label_PreviewMouseLeftButtonDown">
+                <Label.Background>
+                    <ImageBrush ImageSource="Resources/search.png"></ImageBrush>
+                </Label.Background>
+            </Label>
+            <DataGrid x:Name="LDis"  Grid.Column="1" CanUserAddRows="False" Grid.Row="2" Grid.ColumnSpan="10" BorderBrush="Black" BorderThickness="1,5,1,1" ColumnWidth="auto" Grid.RowSpan="1"  Background="White" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="序号" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="物理编码" Width="*" Binding="{Binding IdCode}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="安装位置" Width="*" Binding="{Binding Position}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="左预案1" Width="*" Binding="{Binding LPlan_1}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="左预案2" Width="*" Binding="{Binding LPlan_2}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="左预案3" Width="*" Binding="{Binding LPlan_3}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="左预案4" Width="*" Binding="{Binding LPlan_4}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="左预案5" Width="*" Binding="{Binding LPlan_5}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="右预案1" Width="*" Binding="{Binding RPlan_1}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="右预案2" Width="*" Binding="{Binding RPlan_2}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="右预案3" Width="*" Binding="{Binding RPlan_3}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="右预案4" Width="*" Binding="{Binding RPlan_4}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="右预案5" Width="*" Binding="{Binding RPlan_5}"></DataGridTextColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+            <Button x:Name="preConfirm" Click="prePlanConfirmBt_Click" Grid.Column="4" Content="确认" BorderThickness="0" Grid.Row="3" Style="{StaticResource  buttonstyle}" Width="auto"  Height="auto" ></Button>
+            <Button x:Name="back" Grid.Column="6" Content="返回" BorderThickness="0" Grid.Row="3" Style="{StaticResource  buttonstyle}" Width="auto"  Height="auto"  Click="buttonPlan_Click"></Button>
+        </Grid>
+
+        <Button x:Name="selfCheck" Grid.Row="22" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Click="selfCheck_Click"></Button>
+        <Button x:Name="error" Grid.Row="23" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Click="error_Click"></Button>
+        <Button x:Name="emergency" Grid.Row="24" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto"></Button>
+        <Button x:Name="musicStop" Grid.Row="25" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Grid.RowSpan="2" ></Button>
+
+
+        <Grid Background="White"  x:Name="Positiondisplay" Grid.RowSpan="20" Visibility="Collapsed" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="5">
+            <TabControl     >
+                <TabItem  Header="配电箱位置设置">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="664*"/>
+                            <RowDefinition Height="27*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="47*"/>
+                            <ColumnDefinition Width="18*"/>
+                            <ColumnDefinition Width="112*"/>
+                            <ColumnDefinition Width="81*"/>
+                            <ColumnDefinition Width="135*"/>
+                            <ColumnDefinition Width="107*"/>
+                            <ColumnDefinition Width="143*"/>
+                            <ColumnDefinition Width="64*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="PeiPositionSet" Grid.ColumnSpan="8" CanUserAddRows="False" AutoGenerateColumns="False" Grid.RowSpan="2" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="序号" Width="*" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="物理编码" Width="*" Binding="{Binding IdCode}"/>
+                                <DataGridTextColumn Header="灯具数量" Width="*" Binding="{Binding LightCount}"/>
+                                <DataGridTextColumn Header="区" Width="*" Binding="{Binding Area}"/>
+                                <DataGridTextColumn Header="栋" Width="*" Binding="{Binding Building}"/>
+                                <DataGridTextColumn Header="层" Width="*" Binding="{Binding Layer}"/>
+                                <DataGridTextColumn Header="号" Width="*" Binding="{Binding Room}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="LocationConfirmBt_1" Click="LocationConfirmBt_Click" Content="类似" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+                        <Button Content="清空"  Height="26" VerticalAlignment="Bottom"  Grid.Column="4" Grid.Row="1"/>
+                        <Button Name="TabReturn_button" Content="返回"  Height="26"  VerticalAlignment="Bottom"  Click="TabReturn_button_Click" Grid.Column="6" Grid.Row="1"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="灯具位置设置">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="66*"/>
+                            <ColumnDefinition Width="29*"/>
+                            <ColumnDefinition Width="102*"/>
+                            <ColumnDefinition Width="85*"/>
+                            <ColumnDefinition Width="130*"/>
+                            <ColumnDefinition Width="77*"/>
+                            <ColumnDefinition Width="131*"/>
+                            <ColumnDefinition Width="87*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="26*"/>
+                            <RowDefinition Height="637*"/>
+                            <RowDefinition Height="28*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid  x:Name="LightLocationSet" CanUserAddRows="False"  Grid.Row="1" Grid.ColumnSpan="8" Grid.RowSpan="2" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="序号" Width="*" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="物理编码" Width="*" Binding="{Binding IdCode}"/>
+                                <DataGridTextColumn Header="灯具类型" Width="*"/>
+                                <DataGridTextColumn Header="区" Width="*" Binding="{Binding Area}"/>
+                                <DataGridTextColumn Header="栋" Width="*" Binding="{Binding Building}"/>
+                                <DataGridTextColumn Header="层" Width="*" Binding="{Binding Layer}"/>
+                                <DataGridTextColumn Header="号" Width="*" Binding="{Binding Room}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Content="清空"   Grid.Row="2" Grid.Column="4" />
+                        <Button Content="返回"   Grid.Row="2" Grid.Column="6" Click="TabReturn_button_Click"/>
+                        <Button Content="类似" x:Name="LocationConfirmBt_2" Click="LocationConfirmBt_Click"   Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <Label Content="配电箱选择："  Grid.ColumnSpan="3"/>
+                        <Label Content="配电箱位置："  VerticalAlignment="Top"  Grid.Column="4" Grid.ColumnSpan="1"/>
+                        <ComboBox  x:Name="LocationPei" Grid.Column="2" Grid.ColumnSpan="2" SelectionChanged="LocationPei_SelectionChanged">
+
+                        </ComboBox>
+                        <Label  x:Name="PeiLocation"   Grid.Column="5"  VerticalAlignment="Center" Grid.ColumnSpan="2"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+
+    </Grid>
 </Window>
