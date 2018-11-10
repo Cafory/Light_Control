@@ -73,6 +73,9 @@
     <Compile Include="FireWorkTogether.xaml.cs">
       <DependentUpon>FireWorkTogether.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImgSet.xaml.cs">
+      <DependentUpon>ImgSet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Instruction.cs" />
     <Compile Include="NormolProcess.cs" />
     <Compile Include="PortHelper.cs" />
@@ -110,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FireWorkTogether.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImgSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -334,6 +341,29 @@
   <ItemGroup>
     <Resource Include="Resources\标志灯右绿.png" />
     <Resource Include="Resources\标志灯左绿.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\红指示灯.png" />
+    <Resource Include="Resources\绿指示灯.png" />
+    <Resource Include="Resources\黄指示灯.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\照明灯灰.png" />
+    <Resource Include="Resources\照明灯绿.png" />
+    <Resource Include="Resources\照明灯黄.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\双头灯灰.png" />
+    <Resource Include="Resources\双头灯黄.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\灭的指示灯.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Image\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

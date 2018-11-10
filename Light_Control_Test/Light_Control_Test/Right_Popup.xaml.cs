@@ -23,8 +23,20 @@ namespace Light_Control_Test
         public Right_Popup(string _addName, string status) //_addName里面有灯码和配电箱码，                                                        
         {                                                    //  如果是配电箱的右键只有配电箱码，灯的右键第一个码是灯，第二个是配电箱，status才是状态标识符
             InitializeComponent();
+            IniMethod(_addName, status);
+        }
+
+        public Right_Popup(string _addName, string status,bool imgFlag) //_addName里面有灯码和配电箱码，                                                        
+        {                                                    //  如果是配电箱的右键只有配电箱码，灯的右键第一个码是灯，第二个是配电箱，status才是状态标识符
+            InitializeComponent();
+            _imgFlag = imgFlag;
+            IniMethod(_addName, status);
+        }
+
+        public void IniMethod(string _addName, string status)
+        {
             _status = status;
-            code = _addName.Split('+');
+            code = _addName.Split('A');
             windowTitle.Content = status + code[0];
             replace_BeforeCode.Content = code[0];
             replace_BeforeTip.Content = "原" + status + "码:";
@@ -39,6 +51,7 @@ namespace Light_Control_Test
             }
 
         }
+        bool _imgFlag = false;
         string _status;
         string[] code;
         private void Window_Deactivated(object sender, EventArgs e) //窗口失去焦点直接关闭配电箱右键窗体
@@ -96,6 +109,46 @@ namespace Light_Control_Test
 
         private void setGrid_PrePlnModify_btn_Click(object sender, RoutedEventArgs e)
         {
+            DataTable dataTable = SqlHelper.ExecuteDataTable("select * from " + code[1] + " where Name='" + code[0] + "'");
+
+            string [] LPlan = dataTable.Rows[0]["PrePlanLeft"].ToString().Split('-');
+            string [] RPlan = dataTable.Rows[0]["PrePlanRight"].ToString().Split('-');
+
+            if (LPlan.Length<5)
+            {
+                L1.Text = "未设置";
+                L2.Text = "未设置";
+                L3.Text = "未设置";
+                L4.Text = "未设置";
+                L5.Text = "未设置";
+            }
+            else
+            {
+                L1.Text = dataTable.Rows[0]["PrePlanLeft"].ToString().Split('-')[0];
+                L2.Text = dataTable.Rows[0]["PrePlanLeft"].ToString().Split('-')[1];
+                L3.Text = dataTable.Rows[0]["PrePlanLeft"].ToString().Split('-')[2];
+                L4.Text = dataTable.Rows[0]["PrePlanLeft"].ToString().Split('-')[3];
+                L5.Text = dataTable.Rows[0]["PrePlanLeft"].ToString().Split('-')[4];
+            }
+
+            if (RPlan.Length < 5)
+            {
+                R1.Text = "未设置";
+                R2.Text = "未设置";
+                R3.Text = "未设置";
+                R4.Text = "未设置";
+                R5.Text = "未设置";
+            }
+            else
+            {
+                R1.Text = dataTable.Rows[0]["PrePlanRight"].ToString().Split('-')[0];
+                R2.Text = dataTable.Rows[0]["PrePlanRight"].ToString().Split('-')[1];
+                R3.Text = dataTable.Rows[0]["PrePlanRight"].ToString().Split('-')[2];
+                R4.Text = dataTable.Rows[0]["PrePlanRight"].ToString().Split('-')[3];
+                R5.Text = dataTable.Rows[0]["PrePlanRight"].ToString().Split('-')[4];
+            }
+
+
             setGrid.Visibility = Visibility.Collapsed;
             setGrid_prePlanModify.Visibility = Visibility.Visible;
         }
@@ -161,7 +214,10 @@ namespace Light_Control_Test
         private void prePlanModify_Confirm_Click(object sender, RoutedEventArgs e)
         {
             //写入方法
-            MessageBox.Show("确认");
+
+            SqlHelper.ExecuteNonQuery("update " + code[1] + " set PrePlanLeft='" + L1.Text + "-" + L2.Text + "-" + L3.Text + "-" + L4.Text + "-" + L5.Text + "',PrePlanRight='" + R1.Text + "-" + R2.Text + "-" + R3.Text + "-" + R4.Text + "-" + R5.Text + "' where Name='"+code[0]+"'");
+            setGrid_prePlanModify.Visibility = Visibility.Collapsed;   //返回界面
+            setGrid.Visibility = Visibility.Visible;
         }
 
         private void lightLocation_Back_Click(object sender, RoutedEventArgs e)
@@ -194,7 +250,7 @@ namespace Light_Control_Test
             else
               if (Instruction.L_SetSelectedLightStatus(code[0].Split('_')[1], new byte[] { 0x01, 0x77 }))  //指定灯码
               {
-                ChangeLNowStatus(SelectPic("1"), "全亮");
+                ChangeLNowStatus(SelectPic("全亮"), "全亮");
               }
         }
 
@@ -208,7 +264,7 @@ namespace Light_Control_Test
             {
                 if (Instruction.L_SetSelectedLightStatus(code[0].Split('_')[1], new byte[] { 0x01, 0x70 }))
                 {
-                    ChangeLNowStatus(SelectPic("2"), "全灭");
+                    ChangeLNowStatus(SelectPic("全灭"), "全灭");
                 }
             }
         }
@@ -221,10 +277,10 @@ namespace Light_Control_Test
             }
             else
             {
-                if (Instruction.L_SetSelectedLightStatus(code[0].Split('_')[1], new byte[] { 0x01, 0x73 }))
-                {
-                    ChangeLNowStatus(SelectPic("3"), "左亮");
-                }
+                //if (Instruction.L_SetSelectedLightStatus(code[0].Split('_')[1], new byte[] { 0x01, 0x73 }))
+                //{
+                    ChangeLNowStatus(SelectPic("左亮"), "左亮");
+                //}
             }
         }
 
@@ -238,7 +294,7 @@ namespace Light_Control_Test
             {
                 if (Instruction.L_SetSelectedLightStatus(code[0].Split('_')[1], new byte[] { 0x01, 0x76 }))
                 {
-                    ChangeLNowStatus(SelectPic("4"), "右亮");
+                    ChangeLNowStatus(SelectPic("右亮"), "右亮");
                 }
             }
         }
@@ -334,34 +390,82 @@ namespace Light_Control_Test
             }
         }
 
-        private void full_Click(object sender, RoutedEventArgs e)
+        private void full_Click(object sender, RoutedEventArgs e)  //右键按钮界面后的 详情界面
         {
             btnGrid.Visibility = Visibility.Collapsed;
-            Info.Visibility = Visibility.Visible;
-            DataTable dt = SqlHelper.ExecuteDataTable("select * from " + code[1] + " where Name='" + code[0] + "'");
-            inWhichPei.Content = code[1];
-            location.Content = dt.Rows[0]["Position"];
-            lightCode.Content = code[0];
-            iniStatus.Content = dt.Rows[0]["IniStatus"];
+            //Info.Visibility = Visibility.Visible;
+            if (_status=="配电箱")
+            {
+                InfoPei.Visibility = Visibility.Visible;
+                DataTable dt = SqlHelper.ExecuteDataTable("select * from Pei");
+                fullPeiLC.Content = dt.Rows.Count.ToString();
+                dt = SqlHelper.ExecuteDataTable("select * from Pei where Name='" + code[0] + "'");
+                fullPeiCodeDis.Content = code[0];
+                if (String.IsNullOrEmpty(dt.Rows[0]["Position"].ToString()))
+                    fullPeiLocation.Content = "未设置";
+                else
+                    fullPeiLocation.Content = dt.Rows[0]["Position"];
+                if (String.IsNullOrEmpty(dt.Rows[0]["Status"].ToString()))
+                    fullPeiStatus.Content = "未获取到";
+                else
+                    fullPeiStatus.Content = dt.Rows[0]["Status"].ToString();
+            }
+            else
+            {
+                Info.Visibility = Visibility.Visible;
+                DataTable dt = SqlHelper.ExecuteDataTable("select * from " + code[1] + " where Name='" + code[0] + "'");
+                inWhichPei.Content = code[1];
+                lightCode.Content = code[0];
+
+                if (String.IsNullOrEmpty(dt.Rows[0]["Position"].ToString()))
+                    location.Content = "未设置";
+                else
+                    location.Content = dt.Rows[0]["Position"];
+                if (String.IsNullOrEmpty(dt.Rows[0]["IniStatus"].ToString()))
+                    iniStatus.Content = "未设置";
+                else
+                    iniStatus.Content = dt.Rows[0]["IniStatus"];
+                if (String.IsNullOrEmpty(dt.Rows[0]["Status"].ToString()))
+                    nowStatus.Content = "未设置";
+                else
+                    nowStatus.Content = dt.Rows[0]["Status"].ToString();
+
+            }
 
         }
 
         private void emergency_Click(object sender, RoutedEventArgs e)
         {
-
+            Instruction.C_ControlYearCheck();
         }
 
 
         public void ChangeLNowStatus(string path, string lStatus)  //改变灯的状态
         {
-            foreach (Button item in ((MainWindow)this.Owner).addPanel.Children.OfType<Button>())
+            if (_imgFlag)    //改变画布灯的状态
             {
-                if (!item.Content.ToString().Contains("添加灯具"))
+                foreach (Image item in ((MainWindow)this.Owner).ImgShowCanvas.Children.OfType<Image>())
                 {
-                    if (((TextBlock)item.Content).Text == code[0])
+                  
+                        if (item.Name.Split('A')[0] == code[0])
+                        {
+                            item.Source =  new BitmapImage(new Uri(path));
+                            SqlHelper.ExecuteNonQuery("update " + code[1] + " set Status='" + lStatus + "' where Name='" + code[0] + "' ");
+                        }
+              
+                }
+            }
+            else       //改变灯显示界面的状态图片
+            {
+                foreach (Button item in ((MainWindow)this.Owner).addPanel.Children.OfType<Button>())
+                {
+                    if (!item.Content.ToString().Contains("添加灯具"))
                     {
-                        item.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri(path)), Stretch = Stretch.Uniform };
-                        SqlHelper.ExecuteNonQuery("update " + code[1] + " set Status='" + lStatus + "' where Name='" + code[0] + "' ");
+                        if (((TextBlock)item.Content).Text == code[0])
+                        {
+                            item.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri(path)), Stretch = Stretch.Uniform };
+                            SqlHelper.ExecuteNonQuery("update " + code[1] + " set Status='" + lStatus + "' where Name='" + code[0] + "' ");
+                        }
                     }
                 }
             }
@@ -372,62 +476,7 @@ namespace Light_Control_Test
         public string SelectPic(string status)
         {
             string flag = code[0].Split('_')[1].ToCharArray()[0].ToString() + status;   //1 全亮 ，2 全灭，3 左亮 ，4 右亮，
-            string pic = "pack://application:,,,/Resources/配电箱黄.png";
-            switch (code[0].Split('_')[1].ToCharArray()[0].ToString())    //根据高位划分灯具类型并添加不同图片显示
-            {
-                //case "1": { item.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")), Stretch = Stretch.Uniform }; break; }
-                case "21": { pic = "pack://application:,,,/Resources/标志灯双向绿.png"; break; }
-                case "22": { pic = "pack://application:,,,/Resources/标志灯双向灭.png"; break; }
-                case "23": { pic = "pack://application:,,,/Resources/标志灯左绿.png.png"; break; }
-                case "24": { pic = "pack://application:,,,/Resources/标志灯右绿.png.png"; break; }
-                //case "3": { item.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/双头灯绿.png")), Stretch = Stretch.Uniform }; break; }
-                //case "4": { item.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/地埋灯双向绿.png")), Stretch = Stretch.Uniform }; break; }
-                //case "5":
-                //    {
-                //        if (code[0].Split('_')[1].ToCharArray()[4].ToString() == "0")
-                //        {
-                //            item.Background = new ImageBrush
-                //            {
-                //                ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                //                Stretch = Stretch.Uniform
-                //            };
-                //        }
-                //        else
-                //        {
-                //            item.Background = new ImageBrush
-                //            {
-                //                ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                //                Stretch = Stretch.Uniform
-                //            };
-                //        }
-                //        break;
-                //    }
-                //case "7":
-                //    {
-                //        if (code[0].Split('_')[1].ToCharArray()[4].ToString() == "0")
-                //        {
-                //            item.Background = new ImageBrush
-                //            {
-                //                ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                //                Stretch = Stretch.Uniform
-                //            };
-                //        }
-                //        else
-                //        {
-                //            item.Background = new ImageBrush
-                //            {
-                //                ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                //                Stretch = Stretch.Uniform
-                //            };
-                //        }
-                //        break;
-                //    }
-                //case "8": { item.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")), Stretch = Stretch.Uniform }; break; }
-
-                default:
-                    break;
-            }
-            return pic;
+            return NormolProcess.SelectPic(flag);
         }
     }
 }

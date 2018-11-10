@@ -144,7 +144,14 @@ namespace Light_Control_Test
         private void AddRange_Click(object sender, RoutedEventArgs e)   //增加灯码搜索范围
         {
             Configuration ca = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            ca.AppSettings.Settings.Add(Min1.Text + Min2.Text + Min3.Text + Min4.Text + Min5.Text + "001", Max1.Text + Max2.Text + Max3.Text + Max4.Text + Max5.Text + "050");
+            if (!ca.AppSettings.Settings.AllKeys.Contains(Min1.Text + Min2.Text + Min3.Text + Min4.Text + Min5.Text + "001"))
+            {
+                ca.AppSettings.Settings.Add(Min1.Text + Min2.Text + Min3.Text + Min4.Text + Min5.Text + "001", Max1.Text + Max2.Text + Max3.Text + Max4.Text + Max5.Text + "050");
+            }
+            else
+            {
+                MessageBox.Show("该范围已添加！", "提示");
+            }
             ca.Save();
             ConfigurationManager.RefreshSection("appSettings");
             RangeDis();
@@ -160,6 +167,7 @@ namespace Light_Control_Test
                 if (key != "alarmPcBps" && key != "alarmPcCom" && key != "peiPcCom" && key != "pcBanPcCom")
                 {
                     range.Items.Add(key + "-" + ca.AppSettings.Settings[key].Value);
+
                 }
             }
         }
@@ -302,8 +310,6 @@ namespace Light_Control_Test
             this.Owner.Show();
 
         }
-        
 
-       
     }
 }

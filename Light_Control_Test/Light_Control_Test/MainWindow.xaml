@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Light_Control_Test"
         mc:Ignorable="d"
-        Title="MainWindow"  Height="1024" Width="880"  WindowState="Normal"    ResizeMode="NoResize"   WindowStyle="None" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown" Deactivated="Window_Deactivated" >
+        Title="MainWindow"  Height="1024" Width="880"  WindowState="Normal"    ResizeMode="NoResize"   WindowStyle="None" Loaded="Window_Loaded" MouseEnter="Window_MouseEnter" WindowStartupLocation="CenterScreen" MouseDown="Window_MouseDown" Deactivated="Window_Deactivated" >
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="testStyle">
@@ -29,7 +29,7 @@
         </Style>
     </Window.Resources>
     <Grid  x:Name="MainGrid"  >
- 
+
 
         <Grid.RowDefinitions>
             <RowDefinition Height="108*"/>
@@ -78,7 +78,49 @@
         <Grid.Background>
             <ImageBrush ImageSource="Resources/主界面1.png"></ImageBrush>
         </Grid.Background>
+
+        <Grid Grid.Row="22" Grid.RowSpan="5" Grid.Column="8" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="34*"/>
+                <ColumnDefinition Width="29*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="32*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Ellipse x:Name="checkLight" Grid.Row="1" Grid.Column="1">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="Resources/黄指示灯.png"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Ellipse x:Name="errorLight" Grid.Row="3" Grid.Column="1">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="Resources/黄指示灯.png"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+
+            <Ellipse x:Name="emergencyLight" Grid.Row="5" Grid.Column="1">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="Resources/黄指示灯.png"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Ellipse x:Name="banLight" Grid.Row="7" Grid.Column="1">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="Resources/黄指示灯.png"></ImageBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+        </Grid>
+        <TextBox x:Name="forLightShine" Visibility="Collapsed"  GotFocus="forLightShine_GotFocus"></TextBox>
         <Button Grid.Row="19"  x:Name="Test" Click="Test_Click"></Button>
+        <Button Grid.Row="17"  x:Name="ImgBt" Click="ImgBt_Click"></Button>
         <Image Source="Resources/主界面副.png" Stretch="Fill" Visibility="Collapsed" x:Name="FireWork" Margin="10,5,1,0" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="14"  />
         <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="FireWorkBack" Background="Transparent" BorderThickness="0" Click="FireWorkBack_Click" Grid.Column="3"  Grid.Row="14" Grid.ColumnSpan="2"/>
         <Button   Style="{StaticResource MyButton}" Visibility="{Binding ElementName=FireWork,Path=Visibility,Mode=OneWay}" x:Name="DisExitL" Background="Transparent" BorderThickness="0" Click="DisExitL_Click"  Grid.Column="3"  Grid.Row="12" Grid.ColumnSpan="2"/>
@@ -128,7 +170,7 @@
                 <WrapPanel x:Name="addPanel" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="AliceBlue" MouseLeftButtonDown="addPanel_MouseLeftButtonDown"  >
                     <TextBlock x:Name="_lightHost" Visibility="Collapsed"   ></TextBlock>
                     <TextBlock Text="配电箱" Visibility="Collapsed" x:Name="_addName" ></TextBlock>
-                    <Label Visibility="Collapsed" x:Name="dateCheck" Content=" "></Label>
+                    <Button Visibility="Collapsed" x:Name="dateCheck" Content=" " Click="dateCheck_Click"></Button>
                     <Button x:Name="addNew" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="    添加配电箱" Style="{StaticResource testStyle}" Width="90" Height="120"  Margin="0,0,10,10" Click="Bt_Click">
                         <Button.Background>
                             <ImageBrush ImageSource="Resources/加.jpg"></ImageBrush>
@@ -149,7 +191,27 @@
                 </TabControl>
             </ScrollViewer>-->
 
+            <Grid x:Name="ImgShowGrid" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="Pink">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="19*"/>
+                    <RowDefinition Height="673*"/>
+                </Grid.RowDefinitions>
+                <WrapPanel>
+                    <Button Content="Open" x:Name="ImgOpen" Click="ImgOpen_Click"></Button>
+                    <Label Content="      "></Label>
+                    <Button Content="Save" x:Name="Save" Click="Save_Click"></Button>
+                    <Label Content="      "></Label>
+                    <Button Content="AddLight" x:Name="AddLight" Click="AddLight_Click"></Button>
+                    <Label Content="      "></Label>
+                    <Button Content="Input" x:Name="Input" Click="Input_Click"></Button>
+                    <Label Content="      "></Label>
+                    <Button Content="Find" x:Name="Find" Click="Find_Click"></Button>
+                </WrapPanel>
+                <Canvas x:Name="ImgShowCanvas" Grid.Row="1" Background="AliceBlue">
 
+                 
+                </Canvas>
+            </Grid>
 
             <!-- 故障显示界面-->
             <TabControl x:Name="errorDis" Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="3" Background="AliceBlue" Visibility="Collapsed">
@@ -361,7 +423,7 @@
                         <ImageBrush ImageSource="Resources/助主菜单案件系统恢复.png"/>
                     </Button.Background>
                 </Button>
-                <Button  Height="Auto" Content="     初始化"  Style="{StaticResource buttonstyle}" Grid.Row="13"  Width="Auto" Grid.Column="1">
+                <Button x:Name="InitialBt"  Click="InitialBt_Click"  Height="Auto" Content="     初始化"  Style="{StaticResource buttonstyle}" Grid.Row="13"  Width="Auto" Grid.Column="1">
                     <Button.Background>
                         <ImageBrush ImageSource="Resources/主菜单按键初始化.png"></ImageBrush>
                     </Button.Background>
@@ -567,7 +629,7 @@
 
         <Button x:Name="selfCheck" Grid.Row="22" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Click="selfCheck_Click"></Button>
         <Button x:Name="error" Grid.Row="23" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Click="error_Click"></Button>
-        <Button x:Name="emergency" Grid.Row="24" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto"></Button>
+        <Button x:Name="emergency" Grid.Row="24" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Click="emergency_Click"></Button>
         <Button x:Name="musicStop" Grid.Row="25" Grid.Column="7" Background="Transparent" Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Grid.RowSpan="2" ></Button>
 
 

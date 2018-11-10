@@ -10,7 +10,7 @@
         <ImageBrush ImageSource="Resources/单背景.png"></ImageBrush>
     </Window.Background>
     <Grid>
-        <Grid x:Name="btnGrid" Visibility="Visible" >
+        <Grid x:Name="btnGrid" Visibility="Visible"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="11*"/>
                 <ColumnDefinition Width="98*"/>
@@ -264,20 +264,20 @@
             <Label Content="左" Grid.Row="3"  Grid.Column="1" FontSize="10" HorizontalContentAlignment="Center"></Label>
             <Label Content="右" Grid.Row="3"  Grid.Column="6" FontSize="10" HorizontalContentAlignment="Center"></Label>
 
-            <TextBox Grid.Row="4" Grid.Column="1"></TextBox>
-            <TextBox Grid.Row="4" Grid.Column="6"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="L1" Grid.Row="4" Grid.Column="1"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="R1" Grid.Row="4" Grid.Column="6"></TextBox>
 
-            <TextBox Grid.Row="6" Grid.Column="1"></TextBox>
-            <TextBox Grid.Row="6" Grid.Column="6"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="L2" Grid.Row="6" Grid.Column="1"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="R2" Grid.Row="6" Grid.Column="6"></TextBox>
 
-            <TextBox Grid.Row="8" Grid.Column="1"></TextBox>
-            <TextBox Grid.Row="8" Grid.Column="6"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="L3" Grid.Row="8" Grid.Column="1"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="R3" Grid.Row="8" Grid.Column="6"></TextBox>
 
-            <TextBox Grid.Row="10" Grid.Column="1"></TextBox>
-            <TextBox Grid.Row="10" Grid.Column="6"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="L4" Grid.Row="10" Grid.Column="1"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="R4" Grid.Row="10" Grid.Column="6"></TextBox>
 
-            <TextBox Grid.Row="12" Grid.Column="1"></TextBox>
-            <TextBox Grid.Row="12" Grid.Column="6"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="L5" Grid.Row="12" Grid.Column="1"></TextBox>
+            <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" x:Name="R5" Grid.Row="12" Grid.Column="6"></TextBox>
 
             <Button x:Name="prePlanModify_Confirm" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Content="确认" Width="auto" Height="auto" Style="{StaticResource buttonstyle}" BorderThickness="0" Click="prePlanModify_Confirm_Click">
                 <Button.Background>
@@ -436,5 +436,42 @@
             <Label x:Name="iniStatus" Content="配电箱通信故障" Grid.Row="10" Grid.Column="2" ></Label>
         </Grid>
 
+
+        <Grid x:Name="InfoPei" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65*"/>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="65*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="61*"/>
+                <RowDefinition Height="28*"/>
+                <RowDefinition Height="27*"/>
+                <RowDefinition Height="28*"/>
+                <RowDefinition Height="27*"/>
+                <RowDefinition Height="28*"/>
+                <RowDefinition Height="27*"/>
+                <RowDefinition Height="28*"/>
+                <RowDefinition Height="27*"/>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="17*"/>
+            </Grid.RowDefinitions>
+            <Label Content="配电箱编码：" Grid.Row="1" HorizontalAlignment="Center"   Grid.Column="1"></Label>
+            <Label x:Name="fullPeiCodeDis" Content="xxxxxxx" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"   ></Label>
+            <Label Content="安装位置：" Grid.Row="3" HorizontalAlignment="Center"    Grid.Column="1"></Label>
+            <Label x:Name="fullPeiLocation" Content="xxxxxxx" HorizontalAlignment="Center" Grid.Row="4"  Grid.Column="1"  ></Label>
+            <Label Content="配电箱状态：" Grid.Row="5" HorizontalAlignment="Center"  Grid.Column="1"  ></Label>
+            <Label x:Name="fullPeiStatus" Content="xxxxxxx" HorizontalAlignment="Center" Grid.Row="6"  Grid.Column="1"  ></Label>
+            <Label Content="灯具总数：" Grid.Row="7" HorizontalAlignment="Center"  Grid.Column="1"  ></Label>
+            <Label x:Name="fullPeiLC" Content="xxxxxxx" HorizontalAlignment="Center" Grid.Row="8"  Grid.Column="1"  ></Label>
+
+            <Button Grid.Row="10" Grid.RowSpan="2"   Style="{StaticResource buttonstyle}" Width="auto" Height="auto" Grid.Column="1">
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/大的返回.png"></ImageBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
     </Grid>
 </Window>

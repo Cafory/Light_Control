@@ -97,39 +97,39 @@
             </Button>
 
             <DockPanel Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Left">
-                <TextBox Height="25" Width="50" x:Name="m1"></TextBox>
+                <TextBox  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="50" x:Name="m1"></TextBox>
                 <Label Content="年" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="m2"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="m2"></TextBox>
                 <Label Content="月" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="m3"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="m3"></TextBox>
                 <Label Content="日" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="m4"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="m4"></TextBox>
                 <Label Content=":" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="m5"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="m5"></TextBox>
                 <Label Content=":" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="m6"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="m6"></TextBox>
                
             </DockPanel>
 
             <DockPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Left">
-                <TextBox Height="25" Width="50" x:Name="y1"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="50" x:Name="y1"></TextBox>
                 <Label Content="年" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="y2"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="y2"></TextBox>
                 <Label Content="月" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="y3"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="y3"></TextBox>
                 <Label Content="日" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="y4"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="y4"></TextBox>
                 <Label Content=":" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="y5"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="y5"></TextBox>
                 <Label Content=":" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="y6"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="y6"></TextBox>
 
             </DockPanel>
 
             <DockPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Left">
                 
                 <Label Content="加速倍数" VerticalAlignment="Center"></Label>
-                <TextBox Height="25" Width="25" x:Name="speed"></TextBox>
+                <TextBox VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="25" Width="25" x:Name="speed"></TextBox>
 
             </DockPanel>
 

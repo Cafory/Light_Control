@@ -249,9 +249,8 @@ namespace Light_Control_Test
             byte[] dataToByte = ProcessString(data);
             PortHelper.SendData(new byte[] { commandData[0], commandData[1], dataToByte[3], dataToByte[2], dataToByte[1], dataToByte[0], commandData[2], commandData[3] });
             Stopwatch sw = new Stopwatch();
-            sw.Start();
 
-            for (int i = 0; i < 70000000; i++)
+            for (int i = 0; i < 500000000; i++)
             {
                 if (PortHelper.receiver != null)
                 {
@@ -262,7 +261,6 @@ namespace Light_Control_Test
                 }
             }
           
-            sw.Stop();
            // MessageBox.Show(sw.Elapsed.ToString());
             PortHelper.receiver = null;
             return flag;
@@ -300,7 +298,7 @@ namespace Light_Control_Test
             }
 
             sw.Stop();
-            MessageBox.Show(sw.ElapsedMilliseconds.ToString());
+        //    MessageBox.Show(sw.ElapsedMilliseconds.ToString());
             PortHelper.receiver = null;
             return flag;
         }

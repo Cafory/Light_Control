@@ -19,6 +19,7 @@ using System.IO.Ports;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.Win32;
 
 namespace Light_Control_Test
 {
@@ -33,25 +34,29 @@ namespace Light_Control_Test
             dt.Interval = new TimeSpan(0, 0, 1);
             dt.Tick += Dt_Tick;
             dt.Start();
-            timerDis.Interval = new TimeSpan(0, 0, 5);
+            timerDis.Interval = new TimeSpan(0, 1, 0);
             timerDis.Tick += TimerDis_Tick;
             timerDis.Start();
             //KeyBorder keyBorder = new KeyBorder();
             //keyBorder.Show();
             addBtn = addPanel.FindName("addNew") as Button;
-            Thread checkThread = new Thread(new ThreadStart(Check));  //自检线程
-            checkThread.Start();
             PortHelper.OpenPort();
 
+            string[] date = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "\\selfCheck.txt");
+            dateCheck.Content = date[0];
+            Thread checkThread = new Thread(new ThreadStart(Check));  //自检线程
+            checkThread.IsBackground = true;
+            checkThread.Start();
             Thread hwControlThread = new Thread(new ThreadStart(HCThread));    //硬件控制线程
             hwControlThread.IsBackground = true;
             hwControlThread.Start();
+
         }
 
 
         private void TimerDis_Tick(object sender, EventArgs e)
         {
-            Task tase = new Task(ThreadUpdate);
+            Thread tase = new Thread(new ThreadStart(ThreadUpdate));
             tase.Start();
 
         }
@@ -65,30 +70,30 @@ namespace Light_Control_Test
             DataTable dt = SqlHelper.ExecuteDataTable("select * from Pei");
             byte[] dataPro = null;
 
-            if (dt.Rows.Count!=0)
+            if (dt.Rows.Count != 0)
             {
-                //if (Instruction.P_FindpeiCode(dt.Rows[PeiCount]["Name"].ToString().Split('_')[1]) == true)
-                //{
-                //    dataPro = Instruction.backByte;
-                //}
-                //if (Instruction.P_AskLightCodeAndStatus(dt.Rows[PeiCount]["Name"].ToString().Split('_')[1]) == true)
-                //{
-                //    // dataPro = Instruction.backByte;
-                //    int i = 3;
-                //    while (dataPro[i] != 0x4F)
-                //    {
+                if (Instruction.P_FindpeiCode(dt.Rows[PeiCount]["Name"].ToString().Split('_')[1]) == true)
+                {
+                    dataPro = Instruction.backByte;
+                }
+                if (Instruction.P_AskLightCodeAndStatus(dt.Rows[PeiCount]["Name"].ToString().Split('_')[1]) == true)
+                {
+                    // dataPro = Instruction.backByte;
+                    int i = 3;
+                    //while (dataPro[i] != 0x4F)
+                    //{
 
-                //    }
-                //}
-                //this.Dispatcher.BeginInvoke(new Action(() =>
-                //{                                   //异步更新UI
-                //    DisErrorPei(dataPro, dt.Rows[PeiCount]["Name"].ToString().Split('_')[1]);
-                //}));
-                //PeiCount++;                              //下一个需要检测的配电箱的序号
-                //if (PeiCount >= dt.Rows.Count)            //判断是否已经全部检测完毕
-                //{
-                //    PeiCount = 0;
-                //}
+                    //}
+                }
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {                                   //异步更新UI
+                    DisErrorPei(dataPro, dt.Rows[PeiCount]["Name"].ToString().Split('_')[1]);
+                }));
+                PeiCount++;                              //下一个需要检测的配电箱的序号
+                if (PeiCount >= dt.Rows.Count)            //判断是否已经全部检测完毕
+                {
+                    PeiCount = 0;
+                }
             }
         }
 
@@ -131,44 +136,72 @@ namespace Light_Control_Test
                 {
                     ErrorDisList.Items.Add(dateDisplay.Content + "     " + peiName + "备电故障");
                 }
+                if (dataPro[3] == 0)
+                {
+                    ErrorDisList.Items.Add(dateDisplay.Content + "     " + peiName + "无事");
+                }
+            }
+            else
+            {
+                ErrorDisList.Items.Add(dateDisplay.Content + "     " + peiName + "故障");
             }
         }
 
-        private int GetbitValue(int input, int index)
+        private int GetbitValue(int input, int index)    //获取位值
         {
             return (input & ((uint)1 << index)) > 0 ? 1 : 0;
         }
 
 
-
-
-
-      
-        public void Check()
+        public void GetCheckDate(string date)   //得到时间
         {
-            //string[] date = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "\\selfCheck.txt");
-            //while (true)
-            //{
-            //    this.Dispatcher.BeginInvoke(new Action(() => { date = new string[] { dateCheck.Content.ToString() }; }));
-            //    if (date[0]==" ")
-            //    {
-            //     date = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "\\selfCheck.txt");
-            //    }
-            //    if (date[0] == DateTime.Now.ToString())
-            //    {
-            //        Instruction.C_ControlMonthCheck();
-            //        //this.Dispatcher.BeginInvoke(new Action(() => { MessageBox.Show("asa"); }));
-            //        DispatcherTimer checkTimew = new DispatcherTimer();
-            //        checkTimew.Interval = TimeSpan.FromSeconds(30);
-            //        checkTimew.Tick += CheckTimew_Tick;
-            //        break;
-            //    }
-            //}
+
+            _date = date.Split('+');
         }
 
-        private void CheckTimew_Tick(object sender, EventArgs e)
+        string[] _date = null;
+
+        DispatcherTimer checkTimew = new DispatcherTimer();
+        DispatcherTimer checkTimey = new DispatcherTimer();
+        public void Check()    //自检程序
+        {
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (_date != null)
+            {
+                if (_date[0] == DateTime.Now.ToLocalTime().ToString())
+                {
+                    Instruction.C_ControlMonthCheck();
+                    checkTimew.Interval = TimeSpan.FromSeconds(5);
+                    checkTimew.Tick += CheckTimew_Tick;
+                    checkTimew.Start();
+                }
+                if (_date[1] == DateTime.Now.ToString())
+                {
+                    Instruction.C_ControlMonthCheck();
+                    checkTimey.Interval = TimeSpan.FromSeconds(10);
+                    checkTimey.Tick += CheckTimey_Tick;
+                    checkTimey.Start();
+                }
+            }
+        }
+
+        private void CheckTimew_Tick(object sender, EventArgs e)   //月检定时器
         {
             Instruction.C_ControlYearCheck();
+            checkTimew.Stop();
+        }
+        private void CheckTimey_Tick(object sender, EventArgs e)   //年检定时器
+        {
+            Instruction.C_ControlYearCheck();
+            checkTimey.Stop();
         }
 
         public string addStatus = "配电箱";    //界面状态字符串
@@ -294,6 +327,8 @@ namespace Light_Control_Test
         }
 
 
+        DataTable addDt = null;
+
         public void Add(string _addName)//新增数据，添加图标，绑定数据
         {
 
@@ -342,56 +377,64 @@ namespace Light_Control_Test
                 bt.Style = this.Resources["testStyle"] as Style;
                 bt.Width = 90;
                 bt.Height = 120;
-                switch (_addName.Split('_')[1].ToCharArray()[0].ToString())    //根据高位划分灯具类型并添加不同图片显示
-                {
-                    case "1": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")), Stretch = Stretch.Uniform }; break; }
-                    case "2": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/标志灯双向绿.png")), Stretch = Stretch.Uniform }; break; }
-                    case "3": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/双头灯绿.png")), Stretch = Stretch.Uniform }; break; }
-                    case "4": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/地埋灯双向绿.png")), Stretch = Stretch.Uniform }; break; }
-                    case "5":
-                        {
-                            if (_addName.Split('_')[1].ToCharArray()[4].ToString() == "0")
-                            {
-                                bt.Background = new ImageBrush
-                                {
-                                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                                    Stretch = Stretch.Uniform
-                                };
-                            }
-                            else
-                            {
-                                bt.Background = new ImageBrush
-                                {
-                                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                                    Stretch = Stretch.Uniform
-                                };
-                            }
-                            break;
-                        }
-                    case "7":
-                        {
-                            if (_addName.Split('_')[1].ToCharArray()[4].ToString() == "0")
-                            {
-                                bt.Background = new ImageBrush
-                                {
-                                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                                    Stretch = Stretch.Uniform
-                                };
-                            }
-                            else
-                            {
-                                bt.Background = new ImageBrush
-                                {
-                                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
-                                    Stretch = Stretch.Uniform
-                                };
-                            }
-                            break;
-                        }
-                    case "8": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")), Stretch = Stretch.Uniform }; break; }
+                #region
+                //switch (_addName.Split('_')[1].ToCharArray()[0].ToString())    //根据高位划分灯具类型并添加不同图片显示
+                //{
+                //    case "1": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")), Stretch = Stretch.Uniform }; break; }
+                //    case "2": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/标志灯双向绿.png")), Stretch = Stretch.Uniform }; break; }
+                //    case "3": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/双头灯绿.png")), Stretch = Stretch.Uniform }; break; }
+                //    case "4": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/地埋灯双向绿.png")), Stretch = Stretch.Uniform }; break; }
+                //    case "5":
+                //        {
+                //            if (_addName.Split('_')[1].ToCharArray()[4].ToString() == "0")
+                //            {
+                //                bt.Background = new ImageBrush
+                //                {
+                //                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
+                //                    Stretch = Stretch.Uniform
+                //                };
+                //            }
+                //            else
+                //            {
+                //                bt.Background = new ImageBrush
+                //                {
+                //                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
+                //                    Stretch = Stretch.Uniform
+                //                };
+                //            }
+                //            break;
+                //        }
+                //    case "7":
+                //        {
+                //            if (_addName.Split('_')[1].ToCharArray()[4].ToString() == "0")
+                //            {
+                //                bt.Background = new ImageBrush
+                //                {
+                //                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
+                //                    Stretch = Stretch.Uniform
+                //                };
+                //            }
+                //            else
+                //            {
+                //                bt.Background = new ImageBrush
+                //                {
+                //                    ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")),
+                //                    Stretch = Stretch.Uniform
+                //                };
+                //            }
+                //            break;
+                //        }
+                //    case "8": { bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/配电箱黄.png")), Stretch = Stretch.Uniform }; break; }
 
-                    default:
-                        break;
+                //    default:
+                //        break;
+                //}
+                #endregion
+
+                addDt = SqlHelper.ExecuteDataTable("select * from " + _lightHost.Text + " where Name='" + _addName + "'");
+                if (addDt.Rows.Count > 0)
+                {
+                    bt.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri(NormolProcess.SelectPic(_addName.Split('_')[1].ToCharArray()[0].ToString() + addDt.Rows[0]["Status"].ToString()))), Stretch = Stretch.Uniform };
                 }
 
                 if (disSetFlag)   //切换配电箱和灯下面的显示
@@ -474,7 +517,7 @@ namespace Light_Control_Test
             }
             else
             {
-                Right_Popup rp = new Right_Popup(((Button)sender).Name + "+" + _lightHost.Text, _addName.Text);
+                Right_Popup rp = new Right_Popup(((Button)sender).Name + "A" + _lightHost.Text, _addName.Text);
                 rp.Left = p.X;
                 rp.Top = p.Y;
                 rp.Owner = this;
@@ -516,11 +559,14 @@ namespace Light_Control_Test
                 rp.location.Content = "未设置";
             else
                 rp.location.Content = dt.Rows[0]["Position"];
-            rp.lightCode.Content = ((Button)sender).Name;
             if (String.IsNullOrEmpty(dt.Rows[0]["IniStatus"].ToString()))
                 rp.iniStatus.Content = "未设置";
             else
                 rp.iniStatus.Content = dt.Rows[0]["IniStatus"];
+            if (String.IsNullOrEmpty(dt.Rows[0]["Status"].ToString()))
+                rp.nowStatus.Content = "未设置";
+            else
+                rp.nowStatus.Content = dt.Rows[0]["Status"].ToString();
             rp.lightCode.Content = ((Button)sender).Name;
             rp.Left = p.X;
             rp.Top = p.Y;
@@ -549,10 +595,6 @@ namespace Light_Control_Test
             menuImage.Visibility = Visibility.Collapsed;
             SecondMenuDisplay(-1);
         }
-
-
-
-
 
         private void buttonPlan_Click(object sender, RoutedEventArgs e)   //疏散预案进入
         {
@@ -763,6 +805,9 @@ namespace Light_Control_Test
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             EleBoxDis();           //显示全部配电箱
+            Thread lightShine = new Thread(LightShine);
+            lightShine.Start();
+
         }
 
         private void PrePlanPei_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1017,32 +1062,337 @@ namespace Light_Control_Test
         {
             SqlHelper.ExecuteNonQuery("delete Pei;Drop table _60000002");
             EleBoxDis();
-           
+
         }
 
 
 
         public void HCThread()    //硬件控制线程
         {
-            while(true)
+            byte[] getBackByte = null;
+            while (true)
             {
-                byte[] getBackByte = null ;
-                if (Instruction.backByte!=null)
+                getBackByte = PortHelper.receiver;
+                if (getBackByte != null)
                 {
-                    getBackByte = Instruction.backByte;
-                    if (getBackByte[0]==0x66)    //放应急指令
+                    if (getBackByte[0] == 0x66 && getBackByte[1] == 0x0B)    //放应急指令
                     {
-                        Instruction.C_ControlMonthCheck();
+                        if (MessageBox.Show("是否执行命令？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            Instruction.C_ControlMonthCheck();
+                            this.Dispatcher.Invoke(new Action(() => { emergencyLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/绿指示灯.png")), Stretch = Stretch.Uniform }; }));
+                        }
+
                     }
-                    if (getBackByte[0]==0x13)   //主电指令
+                    if (getBackByte[0] == 0x66 && getBackByte[1] == 0x0C)   //主电指令  && getBackByte[2] == 00 && getBackByte[3] == 00 && getBackByte[4] == 00 && getBackByte[5] == 00 && getBackByte[6] == 00 && getBackByte[7] == 00
                     {
                         Instruction.C_ControlYearCheck();
                     }
+                    //PortHelper.HSendData(getBackByte);
+                    PortHelper.receiver = null;
+
+                }
+            }
+        }
+
+        private void dateCheck_Click(object sender, RoutedEventArgs e)   //告知系统自检日期的设置
+        {
+            GetCheckDate(dateCheck.Content.ToString());
+        }
+
+        private void emergency_Click(object sender, RoutedEventArgs e)
+        {
+            emergencyLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/绿指示灯.png")), Stretch = Stretch.Uniform };
+
+        }
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //Thread lightShine = new Thread(LightShine);
+            //lightShine.Start();
+        }
+
+
+
+
+        public void LightShine()      ///刚打开界面的时候闪烁灯,这个方法不太好
+        {
+            Thread.Sleep(1000);
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                checkLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/绿指示灯.png")), Stretch = Stretch.Uniform };
+                errorLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/绿指示灯.png")), Stretch = Stretch.Uniform };
+                emergencyLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/绿指示灯.png")), Stretch = Stretch.Uniform };
+                banLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/绿指示灯.png")), Stretch = Stretch.Uniform };
+            }));
+            Thread.Sleep(1000);
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                checkLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/黄指示灯.png")), Stretch = Stretch.Uniform };
+                errorLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/黄指示灯.png")), Stretch = Stretch.Uniform };
+                emergencyLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/黄指示灯.png")), Stretch = Stretch.Uniform };
+                banLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/黄指示灯.png")), Stretch = Stretch.Uniform };
+            }));
+            Thread.Sleep(1000);
+
+            this.Dispatcher.Invoke(new Action(() =>
+            {
+                checkLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/灭的指示灯.png")), Stretch = Stretch.Uniform };
+                errorLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/灭的指示灯.png")), Stretch = Stretch.Uniform };
+                emergencyLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/灭的指示灯.png")), Stretch = Stretch.Uniform };
+                banLight.Fill = new ImageBrush { ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/灭的指示灯.png")), Stretch = Stretch.Uniform };
+            }));
+            this.MouseEnter -= Window_MouseEnter;
+
+        }
+
+        private void forLightShine_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Thread lightShine = new Thread(LightShine);
+            lightShine.Start();
+        }
+
+        private void InitialBt_Click(object sender, RoutedEventArgs e)
+        {
+            SqlHelper.ExecuteNonQuery("delete Pei;Drop table _60000002");
+            EleBoxDis();
+
+            if (MessageBox.Show("是否将系统初始化？", "提示", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    DataTable initialDt = SqlHelper.ExecuteDataTable("select * from Pei");
+                    foreach (DataRow item in initialDt.Rows)
+                    {
+                        SqlHelper.ExecuteNonQuery("Drop table " + item["Name"].ToString() + "");
+
+                    }
+                    SqlHelper.ExecuteNonQuery("delete Pei;");
+                    EleBoxDis();
+                    MessageBox.Show("初始化成功！", "提示");
+                }
+                catch
+                {
+                    MessageBox.Show("初始化失败！", "提示");
                 }
             }
         }
 
 
+        string sourceFileName = null;
+        private void ImgOpen_Click(object sender, RoutedEventArgs e)
+        {
+          
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "矢量图文件|*.svg|PNG图片|*.png";
+            if (ofd.ShowDialog() == true)
+            {
+                //tf.X = 0;
+                //tf.Y = 0;
+                foreach (Image item in ImgShowCanvas.Children.OfType<Image>())  //取消名字注册
+                {
+                    ImgShowCanvas.UnregisterName(item.Name);
+                }
+                ImgShowCanvas.Children.Clear();                                //清空Canvas
+                string fileName = ofd.FileName;
+
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Image/" + fileName.Split('\\').Last().Split('.')[0] + ".txt"))
+                {
+                    string[] imgInfo = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "Image/" + fileName.Split('\\').Last().Split('.')[0] + ".txt");
+                    foreach (string item in imgInfo)
+                    {
+                        imgDt = SqlHelper.ExecuteDataTable("select * from " + item.Split(';')[0].Split('A')[1] + " where Name='" + item.Split(';')[0].Split('A')[0] + "' ");
+                        Image image = new Image() { Width = 50, Height = 50, Stretch = Stretch.Uniform };
+                        image.Source = new BitmapImage(new Uri(NormolProcess.SelectPic(item.Split(';')[0].Split('A')[0].ToCharArray()[1] + imgDt.Rows[0]["Status"].ToString())));
+                        image.Name = item.Split(';')[0];
+                        image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
+                        image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
+                        image.MouseRightButtonDown += Img_MouseRightButtonDown;
+                        image.MouseMove += Image_MouseMove;
+                        image.RenderTransform = new TranslateTransform(Convert.ToDouble(item.Split(';')[1]), Convert.ToDouble(item.Split(';')[2]));
+                        tf.X = Convert.ToDouble(item.Split(';')[1]);
+                        tf.Y = Convert.ToDouble(item.Split(';')[2]);
+                        ImgShowCanvas.Children.Add(image);
+                        ImgShowCanvas.RegisterName(item.Split(';')[0], image);
+                    }
+                }
+                ImageBrush ib = new ImageBrush() { Stretch = Stretch.Uniform };
+                ib.ImageSource = new BitmapImage(new Uri(fileName));
+                ImgShowCanvas.Background = ib;
+                sourceFileName = fileName;
+                //File.Copy(fileName, AppDomain.CurrentDomain.BaseDirectory+"Image/AA.png");
+            }
+        }
+ 
+        private void AddLight_Click(object sender, RoutedEventArgs e)
+        {
+            ImgSet imgS = new ImgSet();
+            if (imgS.ShowDialog() == true)
+            {
+                DisImgL(NormolProcess.imgInfo[0] + "A" + NormolProcess.imgInfo[1]);
+            }
+        }
+
+        DataTable imgDt = null;
+        public void DisImgL(string name)
+        {
+
+            imgDt = SqlHelper.ExecuteDataTable("select * from " + name.Split('A')[1] + " where Name='" + name.Split('A')[0] + "' ");
+            Image image = new Image() { Width = 50, Height = 50, Stretch = Stretch.Uniform };
+            image.Source = new BitmapImage(new Uri(NormolProcess.SelectPic(name.Split('A')[0].ToCharArray()[1]+imgDt.Rows[0]["Status"].ToString())));
+            image.Name = name;
+            image.MouseLeftButtonDown += Image_MouseLeftButtonDown;
+            image.MouseLeftButtonUp += Image_MouseLeftButtonUp;
+            image.MouseRightButtonDown += Img_MouseRightButtonDown;
+            image.MouseMove += Image_MouseMove;
+            ImgShowCanvas.Children.Add(image);
+            ImgShowCanvas.RegisterName(name, image);
+        }
+
+
+        #region 图像移动代码块
+        TranslateTransform tf = new TranslateTransform(0, 0);
+        private bool isMouseButtonDown = false;
+        private Point prePosition = new Point(0, 0);
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (((Image)sender).Name != beforeImgName)
+            {
+                tf = ((Image)sender).RenderTransform as TranslateTransform;
+                if (tf == null)
+                {
+                    tf = new TranslateTransform(0, 0);
+                }
+
+                beforeImgName = ((Image)sender).Name;
+            }
+            isMouseButtonDown = true;
+            prePosition = e.GetPosition((Image)sender);
+        }
+
+        string beforeImgName = " ";
+        private void Image_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isMouseButtonDown && (beforeImgName == ((Image)sender).Name))
+            {
+                Point p = e.GetPosition((Image)sender);
+                tf.X += p.X - prePosition.X;
+                tf.Y += p.Y - prePosition.Y;
+                ((Image)sender).RenderTransform = tf;
+            }
+        }
+
+        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            isMouseButtonDown = false;
+        }
+        #endregion
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Image/" + sourceFileName.Split('\\').Last()))
+            {
+                File.Copy(sourceFileName, AppDomain.CurrentDomain.BaseDirectory + "Image/" + sourceFileName.Split('\\').Last());
+                //File.Create(AppDomain.CurrentDomain.BaseDirectory + "Image/" + sourceFileName.Split('\\').Last().Split('.')[0] + ".txt");
+                foreach (Image item in ImgShowCanvas.Children.OfType<Image>())
+                {
+                    File.AppendAllLines(AppDomain.CurrentDomain.BaseDirectory + "Image/" + sourceFileName.Split('\\').Last().Split('.')[0] + ".txt", new string[] { item.Name + ";" + ((TranslateTransform)item.RenderTransform).X + ";" + ((TranslateTransform)item.RenderTransform).Y });
+                }
+                MessageBox.Show("保存成功！");
+            }
+            else
+            {
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Image/" + sourceFileName.Split('\\').Last().Split('.')[0] + ".txt");
+                foreach (Image item in ImgShowCanvas.Children.OfType<Image>())
+                {
+                    File.AppendAllLines(AppDomain.CurrentDomain.BaseDirectory + "Image/" + sourceFileName.Split('\\').Last().Split('.')[0] + ".txt", new string[] { item.Name + ";" + ((TranslateTransform)item.RenderTransform).X + ";" + ((TranslateTransform)item.RenderTransform).Y });
+                }
+                MessageBox.Show("保存成功！");
+            }
+        }
+
+        private void Img_MouseRightButtonDown(object sender, MouseButtonEventArgs e)   //右键控制框
+        {
+
+            Point p = new Point();
+            p = Mouse.GetPosition(e.Source as FrameworkElement);
+            p = (e.Source as FrameworkElement).PointToScreen(p);
+            Right_Popup rp = new Right_Popup(((Image)sender).Name, "灯具",true);
+            rp.Left = p.X;
+            rp.Top = p.Y;
+            rp.Owner = this;
+            rp.Show();
+
+        }
+
+        private void Input_Click(object sender, RoutedEventArgs e)   //保存图片到外部
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "矢量图文件|*.svg|PNG图片|*.png";
+            if (sfd.ShowDialog() == true)
+            {
+                //sfd.RestoreDirectory = true;//保存对话框是否记忆上次打开的目录 
+
+                if (SaveImg(sfd.FileName))
+                {
+                    Image image = new Image();
+                    ImageBrush ib = new ImageBrush();
+                    //在 image 中的情况下这么保存
+                    //var encoder = new PngBitmapEncoder();
+                    //encoder.Frames.Add(BitmapFrame.Create((BitmapSource)this.image1.Source));
+                    //using (FileStream stream = new FileStream(sfd.FileName, FileMode.Create))
+                    //    encoder.Save(stream);
+                    MessageBox.Show("保存成功");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("保存失败");
+            }
+        }
+        private bool SaveImg(string path)   //保存图片到外部
+        {
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Create);
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)ImgShowCanvas.ActualWidth,
+                    (int)ImgShowCanvas.ActualHeight, 1 / 96, 1 / 96, PixelFormats.Pbgra32);
+                bmp.Render(ImgShowCanvas);
+                BitmapEncoder encoder = new TiffBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bmp));
+                encoder.Save(fs);
+                fs.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
+            //OpenFileDialog ofd = new OpenFileDialog();
+            //ofd.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + "/Image";
+            //ofd.Filter= "矢量图文件|*.svg|PNG图片|*.png";
+            //if (ofd)
+            //{
+
+            //}
+        }
+
+        private void ImgBt_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImgShowGrid.Visibility==Visibility.Visible)
+            {
+                ImgShowGrid.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                ImgShowGrid.Visibility = Visibility.Visible;
+            }
+        }
     }
 
 

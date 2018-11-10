@@ -85,5 +85,12 @@ namespace Light_Control_Test
                 MessageBox.Show("串口设置错误或串口被关闭！", "提示！");
             }
         }
+        public static void  HSendData(byte[] datas)
+        {
+            if (datas != null)
+            {
+                serialPort.Write(datas, 0, datas.Length);
+            }
+        }
     }
 }

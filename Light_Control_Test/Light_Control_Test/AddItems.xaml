@@ -105,7 +105,7 @@
             </Grid.RowDefinitions>
             <Label Content="添加配电箱下灯具" VerticalContentAlignment="Bottom" FontSize="14" FontWeight="Bold" Grid.ColumnSpan="9"></Label>
             <Label Grid.Row="1" Content="灯码范围（最大值/最小值）" Grid.ColumnSpan="15"></Label>
-            <ListBox x:Name="range" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="14" SelectedItem="0"></ListBox>
+            <ListBox  x:Name="range"  Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="14"  SelectedItem="0"  />
             <Label Grid.Row="3" Grid.ColumnSpan="9" Content="灯码最小值"></Label>
             <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" x:Name="Min1" >
                 <ComboBoxItem Content="0" HorizontalContentAlignment="Center" IsSelected="True" ></ComboBoxItem>

@@ -62,3 +62,5 @@ C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\
 C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Styles\Sizes.baml
 C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Styles\Window.baml
 C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\Styles\DataGrid.baml
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\ImgSet.g.cs
+C:\Users\hasee\source\repos\Light_Control\Light_Control_Test\Light_Control_Test\obj\Debug\ImgSet.baml
